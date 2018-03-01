@@ -10,11 +10,12 @@ public abstract class RepositorioImpl<T> implements Repositorio<T> {
 	private Session sessao;
 	private Class<T> modelo;
 	
+	/*
 	public RepositorioImpl(Class<T> model, Session session) {
 		this.modelo   = model;
 		this.sessao = session;
 	}
-	
+	*/
 	@Override
 	public T buscaPorId(Long id) {
 		T e = getSession().get(modelo, id);
