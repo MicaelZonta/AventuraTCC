@@ -24,7 +24,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	protected JWTLoginFilter(String url, AuthenticationManager authManager) {
 		super(new AntPathRequestMatcher(url));
+		System.out.println(this.getClass().getName());
 		setAuthenticationManager(authManager);
+		System.out.println("Set AuthenticationManager");
 	}
 
 	@Override
@@ -34,7 +36,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 		System.out.println("========== Login Attempt ===============");
 		
 		Usuario conta = new ObjectMapper().readValue(request.getInputStream(),Usuario.class);
-		
+		System.out.println(conta);
 		return getAuthenticationManager().authenticate(
 				new UsernamePasswordAuthenticationToken(conta.getUsername(), conta.getPassword(), new ArrayList<GrantedAuthority>()));
 	}

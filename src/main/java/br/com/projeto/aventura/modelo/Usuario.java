@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Usuario {
 
-	long idConta;
+	long idUsuario;
 	long favor;
 	String username;
 	String password;
@@ -28,12 +28,12 @@ public class Usuario {
 		}
 	}
 
-	public long getIdConta() {
-		return idConta;
+	public long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setIdConta(long idConta) {
-		this.idConta = idConta;
+	public void setIdUsuario(long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public long getFavor() {

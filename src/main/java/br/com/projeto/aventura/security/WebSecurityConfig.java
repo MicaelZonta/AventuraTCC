@@ -1,3 +1,4 @@
+
 package br.com.projeto.aventura.security;
 
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(new JWTAuthenticationFilter(),
 	                UsernamePasswordAuthenticationFilter.class);
 		
+		System.out.println(this.getClass().getName());
 	}
 	
 	@Override
@@ -38,11 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//TO-DO IMPLEMENTAR HIBERNATE
 
 		auth.inMemoryAuthentication()
-			.withUser("admin").password("password").roles("ADMIN")
+			.withUser("admin").password("{noop}password").roles("ADMIN")
 			.and()
-			.withUser("user").password("password").roles("USER");
+			.withUser("user").password("{noop}password").roles("USER");
 	}
 
+	
+	
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		//Parece inutiil mas resolve problemas de compatibilidade com Springs mais atuais

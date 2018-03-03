@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-
 import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.negocios.ContaNegociosInterface;
 import br.com.projeto.aventura.negocios.impl.UsuarioNeg;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,8 +44,8 @@ public class TokenAuthenticationService {
 				System.out.println("Username written!");
 				
 				//Injeção de Dependencia
-				ContaNegociosInterface sConta = new UsuarioNeg();
-				Usuario conta = sConta.findByUsername(user);
+				UsuarioNeg nUsuario = new UsuarioNeg();
+				Usuario conta = nUsuario.findByUsername(user);
 
 				UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(
 						conta.getUsername(), null, conta.getRoles());

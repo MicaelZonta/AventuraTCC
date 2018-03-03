@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.negocios.ContaNegociosInterface;
+import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
 import br.com.projeto.aventura.repositorio.impl.UsuarioRep;
 
 
 @Service("sConta")
-public class UsuarioNeg implements ContaNegociosInterface {
+public class UsuarioNeg implements UsuarioNegociosInterface {
 
 	@Autowired
 	private UsuarioRep rConta;
