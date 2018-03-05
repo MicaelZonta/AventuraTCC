@@ -2,19 +2,39 @@ package br.com.projeto.aventura.modelo;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Entity(name = "Usuario")
 public class Usuario {
 
+	@Id
 	long idUsuario;
+
+	@Column(name = "favor")
 	long favor;
+
+	@Column(name = "username", length = 25)
 	String username;
+
+	@Column(name = "password", length = 255)
 	String password;
-	Collection<GrantedAuthority> roles;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "Usuario_Role", joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "idRole", referencedColumnName = "idRole"))
+	Collection<Role> roles;
 
 	public String toString() {
 		try {
@@ -60,11 +80,11 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Collection<GrantedAuthority> getRoles() {
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<GrantedAuthority> roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
 

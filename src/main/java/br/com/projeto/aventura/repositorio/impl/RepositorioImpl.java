@@ -3,19 +3,17 @@ package br.com.projeto.aventura.repositorio.impl;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.Hibernate;
+
+import br.com.projeto.aventura.configuracao.HibernateConfig;
 import br.com.projeto.aventura.repositorio.Repositorio;
 
 public abstract class RepositorioImpl<T> implements Repositorio<T> {
 
-	private Session sessao;
+	private Session session;
 	private Class<T> modelo;
-	
-	/*
-	public RepositorioImpl(Class<T> model, Session session) {
-		this.modelo   = model;
-		this.sessao = session;
-	}
-	*/
+
 	@Override
 	public T buscaPorId(Long id) {
 		T e = getSession().get(modelo, id);
@@ -25,7 +23,7 @@ public abstract class RepositorioImpl<T> implements Repositorio<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> buscaTodos() {
-		Query query =  getSession().createQuery("select t from " + modelo.getSimpleName() + " t");
+		Query query = getSession().createQuery("select t from " + modelo.getSimpleName() + " t");
 		return query.getResultList();
 	}
 
@@ -52,8 +50,17 @@ public abstract class RepositorioImpl<T> implements Repositorio<T> {
 		return object;
 	}
 
-	private Session getSession() {
-		return sessao;
+	protected void openSession() {
+		session = HibernateConfig.getSession();
+		session.beginTransaction();
 	}
 	
+	protected Session getSession() {
+		return session;
+	}
+	protected void closeSession() {
+		session.getTransaction().commit();
+		session.close();
+	}
+
 }

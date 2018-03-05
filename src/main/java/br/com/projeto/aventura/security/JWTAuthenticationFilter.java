@@ -17,13 +17,12 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
-		//Envia Auth para o WebService
+		// Envia Auth para o WebService
 		System.out.println("Filtering Request");
 
 		Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest) request);
 
-		System.out.println("Auth.isEmpty()? " + (authentication == null));
-
+		System.out.println("Authenticated ? " + authentication.isAuthenticated());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		filterChain.doFilter(request, response);
 	}

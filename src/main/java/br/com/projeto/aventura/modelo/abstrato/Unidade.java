@@ -1,4 +1,6 @@
-package br.com.projeto.aventura.modelo;
+package br.com.projeto.aventura.modelo.abstrato;
+
+import br.com.projeto.aventura.modelo.Posicao;
 
 public abstract class Unidade {
 

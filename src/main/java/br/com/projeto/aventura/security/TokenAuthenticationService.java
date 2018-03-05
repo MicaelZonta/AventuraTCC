@@ -1,14 +1,21 @@
 package br.com.projeto.aventura.security;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.negocios.impl.UsuarioNeg;
+import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
+import br.com.projeto.aventura.negocios.impl.LoginNegocios;
+import br.com.projeto.aventura.negocios.impl.UsuarioNegocios;
+import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorio;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -41,16 +48,10 @@ public class TokenAuthenticationService {
 
 			if (user != null) {
 
-				System.out.println("Username written!");
-				
-				//Injeção de Dependencia
-				UsuarioNeg nUsuario = new UsuarioNeg();
-				Usuario conta = nUsuario.findByUsername(user);
+				System.out.println("Token Username: " + user);
 
-				UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(
-						conta.getUsername(), null, conta.getRoles());
-
-				System.out.println(conta);
+				UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(user, null,
+						new ArrayList());
 
 				return username;
 			}

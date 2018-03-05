@@ -4,6 +4,6 @@ import br.com.projeto.aventura.modelo.Usuario;
 
 public interface UsuarioRepositorioInterface {
 
-	public Usuario findByName(Usuario conta);
+	public Usuario encontrarUsername(Usuario usuario);
 	
 }
