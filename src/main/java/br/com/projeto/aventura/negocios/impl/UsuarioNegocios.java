@@ -5,25 +5,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
-import br.com.projeto.aventura.repositorio.UsuarioRepositorioInterface;
-import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorio;
+import br.com.projeto.aventura.repositorio.UsuarioRepositorio;
+import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
 
-@Service("sUsuario")
+@Service("usuarioService")
 public class UsuarioNegocios implements UsuarioNegociosInterface {
 
+	public UsuarioRepositorio usuarioRepositorio;
+	
 	@Autowired
-	public UsuarioRepositorioInterface usuarioRep;
-
-	public void setUsuarioRep(UsuarioRepositorioInterface usuarioRep) {
-		this.usuarioRep = usuarioRep;
+	public void setUsuarioRep(UsuarioRepositorio usuarioRepositorio) {
+		this.usuarioRepositorio = usuarioRepositorio;
 	}
 
 	@Override
 	public Usuario encontrarUsername(String username) {
 		try {
-			Usuario usuario = new Usuario();
-			usuario.setUsername(username);
-			return usuarioRep.encontrarUsername(usuario);
+			return usuarioRepositorio.encontrarUsername(username);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

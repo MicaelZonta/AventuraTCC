@@ -21,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorio;
+import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 

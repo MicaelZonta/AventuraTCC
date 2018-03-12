@@ -7,12 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.context.annotation.Scope;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,33 +20,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Usuario {
 
 	@Id
-	long idUsuario;
+	private Long idUsuario;
 
 	@Column(name = "favor")
-	long favor;
+	private Long favor;
 
 	@Column(name = "username", length = 25)
-	String username;
+	private String username;
 
 	@Column(name = "password", length = 255)
-	String password;
+	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "Usuario_Role", joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "idRole", referencedColumnName = "idRole"))
-	Collection<Role> roles;
+	private Collection<Role> roles;
 
-	public String toString() {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			String jsonInString = "";
-			jsonInString = mapper.writeValueAsString(this);
-			return jsonInString;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			return null;
-		}
+	public Usuario(String username, String password) {
+		setUsername(username);
+		setPassword(password);
 	}
-
+	
+	public Usuario(String username, String password, Long favor) {
+		this(username, password);
+		setFavor(favor);
+	}
+	
+	public Usuario() {
+		
+	}
+	
+	
 	public long getIdUsuario() {
 		return idUsuario;
 	}
@@ -87,5 +89,18 @@ public class Usuario {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public String toString() {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonInString = "";
+			jsonInString = mapper.writeValueAsString(this);
+			return jsonInString;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 
 }

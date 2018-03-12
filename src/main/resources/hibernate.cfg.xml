@@ -7,10 +7,10 @@
 	<session-factory>
 
 		<!-- Database connection settings -->
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/aventura_db</property>
-		<property name="connection.username">root</property>
-		<property name="connection.password">root</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/service_music</property>
+        <property name="connection.username">junior</property>
+        <property name="connection.password">europa</property>
 
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="show_sql">true</property>
