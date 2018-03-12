@@ -9,7 +9,7 @@ import br.com.projeto.aventura.modelo.Role;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
 import br.com.projeto.aventura.negocios.impl.UsuarioNegocios;
-import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorio;
+import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
 
 public interface WebServiceValidator {
 
