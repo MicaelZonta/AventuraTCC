@@ -1,10 +1,10 @@
 package br.com.projeto.aventura.repositorio.impl;
 
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.Hibernate;
 
 import br.com.projeto.aventura.configuracao.HibernateConfig;
 import br.com.projeto.aventura.repositorio.Repositorio;
