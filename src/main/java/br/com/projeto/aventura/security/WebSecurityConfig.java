@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		System.out.println("Configuring WebSecurityConfigurerAdapter...");
 		httpSecurity.csrf().disable().authorizeRequests()
-				// .antMatchers(HttpMethod.POST, "/check-my-role").permitAll()
-				// .antMatchers(HttpMethod.POST, "/only-admin").hasRole("ADMIN")
+//				.antMatchers(HttpMethod.POST, "/check-my-role")
+				.antMatchers(HttpMethod.GET, "/hello").authenticated()
 				.antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
