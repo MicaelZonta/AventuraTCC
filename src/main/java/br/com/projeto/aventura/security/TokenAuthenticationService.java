@@ -7,16 +7,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
-import br.com.projeto.aventura.negocios.impl.LoginNegocios;
-import br.com.projeto.aventura.negocios.impl.UsuarioNegocios;
-import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 

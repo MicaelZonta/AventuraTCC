@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,16 +13,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.projeto.aventura.negocios.UsuarioNegociosInterface;
-import br.com.projeto.aventura.negocios.impl.LoginNegocios;
-import ch.qos.logback.core.net.SyslogOutputStream;
+import br.com.projeto.aventura.servico.LoginServico;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	private LoginServico loginServico;
+	
 	@Autowired
-	LoginNegocios loginNeg;
+	public WebSecurityConfig(LoginServico loginServico) {
+		this.loginServico = loginServico;
+	}
 
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
@@ -32,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().authorizeRequests()
 //				.antMatchers(HttpMethod.POST, "/check-my-role")
 				.antMatchers(HttpMethod.GET, "/hello").authenticated()
-				.antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.POST, "/login").permitAll()
+				.antMatchers(HttpMethod.GET, "/login/credencial").permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
 				.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
@@ -61,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Encarregado de criar um autenticador
 		System.out.println("Getting Authentication Provider...");
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(loginNeg);
+		auth.setUserDetailsService(loginServico);
 		auth.setPasswordEncoder(getPasswordEncoder());
 		return auth;
 	}

@@ -1,4 +1,4 @@
-package br.com.projeto.aventura.recurso.impl;
+package br.com.projeto.aventura.recurso;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

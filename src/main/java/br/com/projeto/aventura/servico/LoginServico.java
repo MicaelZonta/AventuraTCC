@@ -1,16 +1,20 @@
-package br.com.projeto.aventura.recurso;
+package br.com.projeto.aventura.servico;
 
 import java.util.List;
 
 import javax.management.relation.RoleNotFoundException;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import br.com.projeto.aventura.modelo.Role;
 import br.com.projeto.aventura.modelo.Usuario;
 
-public interface WebServiceValidator {
+public interface LoginServico extends UserDetailsService {
 
 	public List<RoleEnum> getPermissions();
 
+	String verificaCredencial(String username);
+	
 	public default boolean validarUsuario(Usuario usuario) throws RoleNotFoundException {
 
 		boolean autorizado = false;
@@ -51,5 +55,4 @@ public interface WebServiceValidator {
 			return value;
 		}
 	}
-
 }
