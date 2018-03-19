@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.projeto.aventura.recurso.impl.LoginRecurso;
+import br.com.projeto.aventura.recurso.impl.PessoaFisicaRecurso;
+import br.com.projeto.aventura.recurso.impl.UsuarioRecurso;
 import br.com.projeto.aventura.servico.LoginServico;
 
 @Configuration
@@ -31,10 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		System.out.println("Configuring WebSecurityConfigurerAdapter...");
 		httpSecurity.csrf().disable().authorizeRequests()
-//				.antMatchers(HttpMethod.POST, "/check-my-role")
-				.antMatchers(HttpMethod.GET, "/hello").authenticated()
-				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/login/credencial").permitAll().anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.POST, LoginRecurso.getUrlLogin()).permitAll()
+				.antMatchers(HttpMethod.POST, UsuarioRecurso.getUrlCadastrar()).permitAll()
+				.antMatchers(HttpMethod.PUT, UsuarioRecurso.getUrlEditar()).permitAll()
+				.antMatchers(HttpMethod.DELETE, UsuarioRecurso.getUrlExcluir()).permitAll()
+				.antMatchers(HttpMethod.POST, PessoaFisicaRecurso.getUrlCadastrar()).authenticated()
+				.antMatchers(HttpMethod.PUT, PessoaFisicaRecurso.getUrlEditar()).authenticated()
+				.antMatchers(HttpMethod.GET, PessoaFisicaRecurso.getUrlEncontrar()).authenticated()
+				.antMatchers(HttpMethod.GET, LoginRecurso.getUrlCheck()).permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
 				.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),

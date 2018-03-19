@@ -6,14 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "Role")
 public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idRole;
-	
-	@Column(name="nome",length=25)
+
+	@Column(name = "nome", unique = true, nullable = false, length = 25)
 	private String nome;
 
 	public Long getIdRole() {

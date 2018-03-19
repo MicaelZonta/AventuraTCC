@@ -14,39 +14,50 @@ public abstract class RepositorioImpl<T> implements Repositorio<T> {
 	private Session session;
 	private Class<T> modelo;
 
+	public RepositorioImpl(Class<T> modelo){
+		this.modelo = modelo;
+	}
+	
 	@Override
 	public T buscaPorId(Long id) {
+		openSession();
 		T e = getSession().get(modelo, id);
+		closeSession();
 		return e;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> buscaTodos() {
+		openSession();
 		Query query = getSession().createQuery("select t from " + modelo.getSimpleName() + " t");
-		return query.getResultList();
+		List<T> lista = query.getResultList();
+		closeSession();
+		return lista;
 	}
 
 	@Override
 	public T inserir(T object) {
+		openSession();
 		getSession().save(object);
 		getSession().persist(object);
+		closeSession();
 		return object;
 	}
 
 	@Override
 	public T atualizar(Long id, T object) {
-		getSession().beginTransaction();
+		openSession();
 		getSession().saveOrUpdate(object);
-		getSession().getTransaction().commit();
+		closeSession();
 		return object;
 	}
 
 	@Override
 	public T excluir(T object) {
-		getSession().beginTransaction();
+		openSession();
 		getSession().delete(object);
-		getSession().getTransaction().commit();
+		closeSession();
 		return object;
 	}
 
@@ -54,10 +65,11 @@ public abstract class RepositorioImpl<T> implements Repositorio<T> {
 		session = HibernateConfig.getSession();
 		session.beginTransaction();
 	}
-	
+
 	protected Session getSession() {
 		return session;
 	}
+
 	protected void closeSession() {
 		session.getTransaction().commit();
 		session.close();

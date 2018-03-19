@@ -33,6 +33,8 @@ public class TokenAuthenticationService {
 		token.append("\"" + username +"\",");
 		token.append("\"token\":");
 		token.append("\""+ JWT + "\"");
+		token.append("\"expiration\":");
+		token.append("\""+ new Date(System.currentTimeMillis() + EXPIRATION_TIME) + "\"");
 		token.append("}");
 		
 		response.getWriter().write(token.toString());
@@ -41,6 +43,7 @@ public class TokenAuthenticationService {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	static Authentication getAuthentication(HttpServletRequest request) {
 		System.out.println("=== Getting Authentication Token ===");
 
@@ -56,6 +59,7 @@ public class TokenAuthenticationService {
 
 				System.out.println("Token Username: " + user);
 
+				@SuppressWarnings("rawtypes")
 				UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(user, null,
 						new ArrayList());
 
