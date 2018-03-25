@@ -48,19 +48,19 @@ public class Usuario {
 	}
 	
 	
-	public long getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(long idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
-	public long getFavor() {
+	public Long getFavor() {
 		return favor;
 	}
 
-	public void setFavor(long favor) {
+	public void setFavor(Long favor) {
 		this.favor = favor;
 	}
 
@@ -96,7 +96,7 @@ public class Usuario {
 			return jsonInString;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		}
 	}
 

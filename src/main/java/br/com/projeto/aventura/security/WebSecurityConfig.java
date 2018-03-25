@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers(HttpMethod.POST, "/check-my-role")
 				.antMatchers(HttpMethod.GET, "/hello").authenticated()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/login/credencial").permitAll().anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.GET, "/login").permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
 				.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
