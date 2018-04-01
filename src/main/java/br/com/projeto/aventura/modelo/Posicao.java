@@ -1,20 +1,24 @@
 package br.com.projeto.aventura.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "Posicao")
-public class Posicao {
+public class Posicao implements Serializable {
+
+	private static final long serialVersionUID = -3080946180624798351L;
 
 	@Id
-	long idUnidade;
+	private long idUnidade;
 
 	@Column(name = "latitude")
-	double latitude;
+	private double latitude;
 
 	@Column(name = "longitude")
-	double longitude;
+	private double longitude;
 
 	public long getIdUnidade() {
 		return idUnidade;
@@ -38,6 +42,10 @@ public class Posicao {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

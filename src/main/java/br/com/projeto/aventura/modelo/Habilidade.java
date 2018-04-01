@@ -8,24 +8,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "Role")
-public class Role implements Serializable {
+@Entity(name = "Habilidade")
+public class Habilidade implements Serializable {
 
-	private static final long serialVersionUID = -1953554222781689759L;
+	private static final long serialVersionUID = 3939043522266357718L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idRole;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long idHabilidade;
 
 	@Column(name = "nome", unique = true, nullable = false, length = 25)
 	private String nome;
 
-	public Long getIdRole() {
-		return idRole;
+	public long getIdHabilidade() {
+		return idHabilidade;
 	}
 
-	public void setIdRole(Long idRole) {
-		this.idRole = idRole;
+	public void setIdHabilidade(long idHabilidade) {
+		this.idHabilidade = idHabilidade;
 	}
 
 	public String getNome() {

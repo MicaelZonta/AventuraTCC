@@ -1,5 +1,6 @@
 package br.com.projeto.aventura.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,9 @@ import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 
 @Entity(name = "Pessoa_Fisica")
 @PrimaryKeyJoinColumn(name = "idPessoa")
-public class PessoaFisica extends Pessoa {
+public class PessoaFisica extends Pessoa implements Serializable {
+
+	private static final long serialVersionUID = 3780047876730324595L;
 
 	@Column(name = "nome", nullable = false, length = 20)
 	private String nome;
@@ -35,21 +38,12 @@ public class PessoaFisica extends Pessoa {
 	@Column(name = "CPF", unique = true, nullable = false, length = 11)
 	private String CPF;
 
-	public PessoaFisica(String nome, String sobrenome, Date dataNascimento, Aventureiro aventureiro, String CPF,
-			String email, Celular celular) {
-		super(email, celular);
-		setNome(nome);
-		setSobrenome(sobrenome);
-		setDataNascimento(dataNascimento);
-		setAventureiro(aventureiro);
-		setCPF(CPF);
-	}
-	public PessoaFisica() {
-		
-	}
-
 	public String getNome() {
 		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getSobrenome() {
@@ -84,8 +78,8 @@ public class PessoaFisica extends Pessoa {
 		CPF = cPF;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public void atualizarInstancia(PessoaFisica p2) {

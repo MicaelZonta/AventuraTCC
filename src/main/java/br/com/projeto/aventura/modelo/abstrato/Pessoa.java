@@ -1,5 +1,7 @@
 package br.com.projeto.aventura.modelo.abstrato;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +18,9 @@ import br.com.projeto.aventura.modelo.Celular;
 
 @Entity(name = "Pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Pessoa {
+public abstract class Pessoa implements Serializable {
+
+	private static final long serialVersionUID = -1362553512477461677L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +33,8 @@ public abstract class Pessoa {
 	private String email;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="idPessoa")
+	@JoinColumn(name = "idPessoa")
 	private Celular celular;
-
-	public Pessoa() {
-
-	}
-
-	public Pessoa(String email, Celular celular) {
-		setEmail(email);
-		setCelular(celular);
-	}
 
 	public long getIdPessoa() {
 		return idPessoa;
@@ -71,6 +66,10 @@ public abstract class Pessoa {
 
 	public void setCelular(Celular celular) {
 		this.celular = celular;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

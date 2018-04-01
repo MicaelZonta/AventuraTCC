@@ -1,5 +1,6 @@
 package br.com.projeto.aventura.modelo;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.projeto.aventura.Util.UtilString;
 
 @Entity(name = "Usuario")
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = -2875037739887260421L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,20 +43,6 @@ public class Usuario {
 
 	@Column(name = "ativo")
 	private boolean ativo;
-
-	public Usuario(String username, String password) {
-		setUsername(username);
-		setPassword(password);
-	}
-
-	public Usuario(String username, String password, Long favor) {
-		this(username, password);
-		setFavor(favor);
-	}
-
-	public Usuario() {
-
-	}
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -101,6 +90,10 @@ public class Usuario {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String toString() {

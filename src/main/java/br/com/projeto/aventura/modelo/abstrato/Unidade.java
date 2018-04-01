@@ -1,5 +1,7 @@
 package br.com.projeto.aventura.modelo.abstrato;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +17,9 @@ import br.com.projeto.aventura.modelo.Posicao;
 
 @Entity(name = "Unidade")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Unidade {
+public abstract class Unidade implements Serializable {
+
+	private static final long serialVersionUID = 6358504224612539869L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +43,10 @@ public abstract class Unidade {
 
 	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
