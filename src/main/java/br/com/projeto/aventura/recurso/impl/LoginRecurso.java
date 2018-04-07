@@ -1,7 +1,5 @@
 package br.com.projeto.aventura.recurso.impl;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +27,8 @@ public class LoginRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_CHECK)
-	public String verificaCredencial(HttpServletRequest request) {
-		return getUsuario(request).toString();
+	public String verificaCredencial() {
+		return getUsuario().toString();
 	}
 
 }

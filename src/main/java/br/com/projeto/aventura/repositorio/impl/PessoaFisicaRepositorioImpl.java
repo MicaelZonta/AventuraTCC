@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import br.com.projeto.aventura.modelo.PessoaFisica;
-import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.repositorio.PessoaFisicaRepositorio;
-import br.com.projeto.aventura.repositorio.UsuarioRepositorio;
 
 @Repository("pessoaFisicaRepositorio")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)

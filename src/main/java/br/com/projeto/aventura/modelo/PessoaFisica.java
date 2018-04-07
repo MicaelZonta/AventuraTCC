@@ -29,7 +29,7 @@ public class PessoaFisica extends Pessoa implements Serializable {
 	private String sobrenome;
 
 	@Column(name = "dataNascimento", nullable = false)
-	private Date dataNascimento;
+	private Date dataNascimento;	
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idPessoa")
@@ -80,23 +80,6 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public void atualizarInstancia(PessoaFisica p2) {
-
-		if (p2.getCelular() != null) {
-			if (p2.getCelular().getNumero() != null) {
-				this.getCelular().setNumero(p2.getCelular().getNumero());
-			}
-			if (p2.getCelular().getDdd() != null) {
-				this.getCelular().setDdd(p2.getCelular().getDdd());
-			}
-		}
-
-		if (p2.getEmail() != null) {
-			this.setEmail(p2.getEmail());
-		}
-
 	}
 
 	public String toString() {

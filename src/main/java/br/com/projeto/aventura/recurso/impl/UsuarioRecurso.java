@@ -1,13 +1,15 @@
 package br.com.projeto.aventura.recurso.impl;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
+import br.com.projeto.aventura.modelo.Role;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.recurso.RoleEnum;
 import br.com.projeto.aventura.recurso.WebService;
@@ -47,8 +49,16 @@ public class UsuarioRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
-	public String cadastrarUsuario(HttpServletRequest request) {
-		Usuario usuario = lerJson(request, Usuario.class);
+	public String cadastrarUsuario(@RequestParam(value = "username", defaultValue = "") String username,
+			@RequestParam(value = "password", defaultValue = "") String password) {
+		Usuario usuario = new Usuario();
+		usuario.setUsername(username);
+		usuario.setPassword(password);
+		usuario.setRoles(new ArrayList<Role>());
+		Role role = new Role();
+		role.setIdRole((long) 1);
+		usuario.getRoles().add(role);
+
 		try {
 			usuarioServico.cadastrarUsuario(usuario);
 		} catch (Exception e) {
@@ -59,10 +69,10 @@ public class UsuarioRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = URL_EDITAR)
-	public String editarUsuario(HttpServletRequest request) {
-		Usuario usuario = getUsuario(request, URL_EDITAR);
-		Usuario usuarioUpdate = lerJson(request, Usuario.class);
-		usuario.atualizarInstancia(usuarioUpdate);
+	public String editarUsuario(@RequestParam(value = "password", defaultValue = "") String password) {
+		Usuario usuario = getUsuario(URL_EDITAR);
+		usuario.setPassword(password);
+
 		try {
 			usuarioServico.editarUsuario(usuario);
 		} catch (Exception e) {
@@ -73,8 +83,8 @@ public class UsuarioRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = URL_EXCLUIR)
-	public String excluirUsuario(HttpServletRequest request) {
-		Usuario usuario = getUsuario(request, URL_EXCLUIR);
+	public String excluirUsuario() {
+		Usuario usuario = getUsuario(URL_EXCLUIR);
 		try {
 			usuarioServico.excluirUsuario(usuario);
 		} catch (Exception e) {

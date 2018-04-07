@@ -1,7 +1,6 @@
 package br.com.projeto.aventura.servico;
 
 import br.com.projeto.aventura.modelo.PessoaFisica;
-import br.com.projeto.aventura.modelo.Usuario;
 
 public interface PessoaFisicaServico {
 

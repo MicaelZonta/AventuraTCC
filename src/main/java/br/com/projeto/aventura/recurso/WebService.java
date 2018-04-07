@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -35,14 +37,15 @@ public abstract class WebService {
 		return listaValidadores.get(URL).validarAutorizacao(usuario);
 	}
 
-	public Usuario getUsuario(HttpServletRequest request) {
-		return getUsuario(request, null);
+	public Usuario getUsuario() {
+		return getUsuario(null);
 	}
 
-	public Usuario getUsuario(HttpServletRequest request, String URL) {
+	public Usuario getUsuario(String URL) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Usuario usuario = null;
 		try {
-			usuario = usuarioServico.encontrarUsuario(request.getRemoteUser());
+			usuario = usuarioServico.encontrarUsuario(auth.getPrincipal().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);

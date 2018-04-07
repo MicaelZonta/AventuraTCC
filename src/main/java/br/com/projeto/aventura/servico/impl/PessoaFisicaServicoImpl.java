@@ -7,12 +7,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import br.com.projeto.aventura.Util.UtilString;
 import br.com.projeto.aventura.modelo.PessoaFisica;
-import br.com.projeto.aventura.modelo.Usuario;
-import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.repositorio.PessoaFisicaRepositorio;
-import br.com.projeto.aventura.repositorio.UsuarioRepositorio;
 import br.com.projeto.aventura.servico.PessoaFisicaServico;
-import br.com.projeto.aventura.servico.UsuarioServico;
 
 @Service("pessoaFisicaServico")
 public class PessoaFisicaServicoImpl implements PessoaFisicaServico {

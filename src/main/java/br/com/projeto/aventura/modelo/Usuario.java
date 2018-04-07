@@ -17,8 +17,6 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.projeto.aventura.Util.UtilString;
-
 @Entity(name = "Usuario")
 public class Usuario implements Serializable {
 
@@ -105,12 +103,6 @@ public class Usuario implements Serializable {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return null;
-		}
-	}
-
-	public void atualizarInstancia(Usuario usuario) {
-		if (usuario.getPassword() != null) {
-			setPassword(usuario.getPassword());
 		}
 	}
 }

@@ -1,14 +1,8 @@
 package br.com.projeto.aventura;
 
-import java.util.Date;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
-
-import br.com.projeto.aventura.modelo.Celular;
-import br.com.projeto.aventura.modelo.DDD;
-import br.com.projeto.aventura.modelo.PessoaFisica;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class App {
