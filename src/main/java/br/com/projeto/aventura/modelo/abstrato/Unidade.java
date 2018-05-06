@@ -23,17 +23,17 @@ public abstract class Unidade implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long idUnidade;
+	Long idUnidade;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idUnidade")
 	Posicao posicao;
 
-	public long getIdUnidade() {
+	public Long getIdUnidade() {
 		return idUnidade;
 	}
 
-	public void setIdUnidade(long idUnidade) {
+	public void setIdUnidade(Long idUnidade) {
 		this.idUnidade = idUnidade;
 	}
 

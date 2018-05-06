@@ -15,13 +15,13 @@ public class Aventureiro extends Unidade implements Serializable {
 	private static final long serialVersionUID = -7757841948234782607L;
 
 	@Column(name = "idPessoa", nullable = false, length = 9)
-	long idPessoa;
+	private Long idPessoa;
 
-	public long getIdPessoa() {
+	public Long getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(long idPessoa) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 

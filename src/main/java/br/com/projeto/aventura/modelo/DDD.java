@@ -15,16 +15,16 @@ public class DDD implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long idDDD;
+	Long idDDD;
 
 	@Column(name = "numero", unique = true, nullable = false, length = 3)
 	String numero;
 
-	public long getIdDDD() {
+	public Long getIdDDD() {
 		return idDDD;
 	}
 
-	public void setIdDDD(long idDDD) {
+	public void setIdDDD(Long idDDD) {
 		this.idDDD = idDDD;
 	}
 

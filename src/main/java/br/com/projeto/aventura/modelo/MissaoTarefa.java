@@ -15,10 +15,10 @@ public class MissaoTarefa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idMissaoTarefa;
+	private Long idMissaoTarefa;
 
 	@Column(name = "idMissao", unique = false, nullable = false)
-	private long idMissao;
+	private Long idMissao;
 
 	@Column(name = "nome", unique = false, nullable = false, length = 20)
 	private String nome;
@@ -26,19 +26,19 @@ public class MissaoTarefa implements Serializable {
 	@Column(name = "descricao", unique = false, nullable = false, length = 100)
 	private String descricao;
 
-	public long getIdMissaoTarefa() {
+	public Long getIdMissaoTarefa() {
 		return idMissaoTarefa;
 	}
 
-	public void setIdMissaoTarefa(long idMissaoTarefa) {
+	public void setIdMissaoTarefa(Long idMissaoTarefa) {
 		this.idMissaoTarefa = idMissaoTarefa;
 	}
 
-	public long getIdMissao() {
+	public Long getIdMissao() {
 		return idMissao;
 	}
 
-	public void setIdMissao(long idMissao) {
+	public void setIdMissao(Long idMissao) {
 		this.idMissao = idMissao;
 	}
 

@@ -20,10 +20,10 @@ public class MissaoDificuldade implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idMissaoDificuldade;
+	private Long idMissaoDificuldade;
 
 	@Column(name = "idMissao", unique = false, nullable = false)
-	private long idMissao;
+	private Long idMissao;
 
 	@Embedded
 	private Nivel nivel;
@@ -32,19 +32,19 @@ public class MissaoDificuldade implements Serializable {
 	@JoinColumn(name = "idHabilidade")
 	private Habilidade habilidade;
 
-	public long getIdMissaoDificuldade() {
+	public Long getIdMissaoDificuldade() {
 		return idMissaoDificuldade;
 	}
 
-	public void setIdMissaoDificuldade(long idMissaoDificuldade) {
+	public void setIdMissaoDificuldade(Long idMissaoDificuldade) {
 		this.idMissaoDificuldade = idMissaoDificuldade;
 	}
 
-	public long getIdMissao() {
+	public Long getIdMissao() {
 		return idMissao;
 	}
 
-	public void setIdMissao(long idMissao) {
+	public void setIdMissao(Long idMissao) {
 		this.idMissao = idMissao;
 	}
 

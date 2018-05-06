@@ -15,7 +15,7 @@ public class Avaliacao implements Serializable {
 	AvaliacaoChave idAvaliacao;
 
 	@Column(name = "estrelas", unique = false, nullable = false)
-	private int estrelas;
+	private Integer estrelas;
 
 	@Column(name = "descricao", unique = false, nullable = false, length = 50)
 	private String descricao;
@@ -28,11 +28,11 @@ public class Avaliacao implements Serializable {
 		this.idAvaliacao = idAvaliacao;
 	}
 
-	public int getEstrelas() {
+	public Integer getEstrelas() {
 		return estrelas;
 	}
 
-	public void setEstrelas(int estrelas) {
+	public void setEstrelas(Integer estrelas) {
 		this.estrelas = estrelas;
 	}
 

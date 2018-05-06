@@ -17,38 +17,38 @@ public class TarefaProgresso implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idTarefaProgresso;
+	private Long idTarefaProgresso;
 
 	@Column(name = "idMissaoProgresso", unique = false, nullable = false)
-	private long idMissaoProgresso;
+	private Long idMissaoProgresso;
 
 	@Column(name = "idTarefa", unique = false, nullable = false)
-	private long idTarefa;
+	private Long idTarefa;
 
 	@Enumerated(EnumType.ORDINAL)
 	private Situacao idSituacao;
 
-	public long getIdTarefaProgresso() {
+	public Long getIdTarefaProgresso() {
 		return idTarefaProgresso;
 	}
 
-	public void setIdTarefaProgresso(long idTarefaProgresso) {
+	public void setIdTarefaProgresso(Long idTarefaProgresso) {
 		this.idTarefaProgresso = idTarefaProgresso;
 	}
 
-	public long getIdMissaoProgresso() {
+	public Long getIdMissaoProgresso() {
 		return idMissaoProgresso;
 	}
 
-	public void setIdMissaoProgresso(long idMissaoProgresso) {
+	public void setIdMissaoProgresso(Long idMissaoProgresso) {
 		this.idMissaoProgresso = idMissaoProgresso;
 	}
 
-	public long getIdTarefa() {
+	public Long getIdTarefa() {
 		return idTarefa;
 	}
 
-	public void setIdTarefa(long idTarefa) {
+	public void setIdTarefa(Long idTarefa) {
 		this.idTarefa = idTarefa;
 	}
 
@@ -63,5 +63,7 @@ public class TarefaProgresso implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
 
 }

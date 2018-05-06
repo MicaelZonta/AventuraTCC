@@ -13,9 +13,9 @@ import br.com.projeto.aventura.servico.PessoaFisicaServico;
 @Service("pessoaFisicaServico")
 public class PessoaFisicaServicoImpl implements PessoaFisicaServico {
 
-	@Autowired
 	private PessoaFisicaRepositorio pessoaFisicaRepositorio;
 
+	@Autowired
 	public PessoaFisicaServicoImpl(PessoaFisicaRepositorio pessoaFisicaRepositorio) {
 		this.pessoaFisicaRepositorio = pessoaFisicaRepositorio;
 	}
@@ -54,17 +54,18 @@ public class PessoaFisicaServicoImpl implements PessoaFisicaServico {
 	}
 
 	private boolean validar(PessoaFisica p) {
-		if(UtilString.isEmpty(p.getNome())) {
+		if (UtilString.isEmpty(p.getNome())) {
 			return false;
 		}
-		if(UtilString.isEmpty(p.getSobrenome())) {
+		if (UtilString.isEmpty(p.getSobrenome())) {
 			return false;
 		}
-		if(UtilString.isEmpty(p.getEmail())) {
+		if (UtilString.isEmpty(p.getEmail())) {
 			return false;
 		}
-		if(UtilString.isEmpty(p.getCPF())) {
+		if (UtilString.isEmpty(p.getCPF())) {
 			return false;
 		}
-		return true;	}
+		return true;
+	}
 }

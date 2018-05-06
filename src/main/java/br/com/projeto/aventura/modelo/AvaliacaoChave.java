@@ -11,24 +11,24 @@ public class AvaliacaoChave implements Serializable {
 	private static final long serialVersionUID = -927695184418103481L;
 
 	@Column(name = "idMissaoProgresso", unique = false, nullable = false)
-	private long idMissaoProgresso;
+	private Long idMissaoProgresso;
 
 	@Column(name = "idPessoa", unique = false, nullable = false)
-	private long idPessoa;
+	private Long idPessoa;
 
-	public long getIdMissaoProgresso() {
+	public Long getIdMissaoProgresso() {
 		return idMissaoProgresso;
 	}
 
-	public void setIdMissaoProgresso(long idMissaoProgresso) {
+	public void setIdMissaoProgresso(Long idMissaoProgresso) {
 		this.idMissaoProgresso = idMissaoProgresso;
 	}
 
-	public long getIdPessoa() {
+	public Long getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(long idPessoa) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 

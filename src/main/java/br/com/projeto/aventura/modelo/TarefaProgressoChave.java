@@ -11,24 +11,24 @@ public class TarefaProgressoChave implements Serializable {
 	private static final long serialVersionUID = -3449878135607852393L;
 
 	@Column(name = "idMissaoProgresso", unique = false, nullable = false)
-	private long idMissaoProgresso;
+	private Long idMissaoProgresso;
 
 	@Column(name = "idMissaoTarefa", unique = false, nullable = false)
-	private long idMissaoTarefa;
+	private Long idMissaoTarefa;
 
-	public long getIdMissaoProgresso() {
+	public Long getIdMissaoProgresso() {
 		return idMissaoProgresso;
 	}
 
-	public void setIdMissaoProgresso(long idMissaoProgresso) {
+	public void setIdMissaoProgresso(Long idMissaoProgresso) {
 		this.idMissaoProgresso = idMissaoProgresso;
 	}
 
-	public long getIdMissaoTarefa() {
+	public Long getIdMissaoTarefa() {
 		return idMissaoTarefa;
 	}
 
-	public void setIdMissaoTarefa(long idMissaoTarefa) {
+	public void setIdMissaoTarefa(Long idMissaoTarefa) {
 		this.idMissaoTarefa = idMissaoTarefa;
 	}
 

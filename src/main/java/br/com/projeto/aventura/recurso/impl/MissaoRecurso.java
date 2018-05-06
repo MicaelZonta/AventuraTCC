@@ -18,12 +18,13 @@ import br.com.projeto.aventura.servico.PessoaFisicaServico;
 import br.com.projeto.aventura.servico.UsuarioServico;
 
 @RestController
-@RequestMapping("/" + PessoaFisicaRecurso.URL_HOME)
-public class PessoaFisicaRecurso extends WebService {
+@RequestMapping("/" + MissaoRecurso.URL_HOME)
+public class MissaoRecurso extends WebService {
 
-	public static final String URL_HOME = "pessoa";
+	public static final String URL_HOME = "missao";
 	public static final String URL_CADASTRAR = "cadastrar";
 	public static final String URL_EDITAR = "editar";
+	public static final String URL_DELETAR = "deletar";
 	public static final String URL_ENCONTRAR = "encontrar";
 
 	@Autowired
@@ -45,7 +46,7 @@ public class PessoaFisicaRecurso extends WebService {
 		return "/" + URL_HOME + "/" + URL_ENCONTRAR;
 	}
 
-	public PessoaFisicaRecurso(UsuarioServico usuarioServ, PessoaFisicaServico pessoaFisicaServico) {
+	public MissaoRecurso(UsuarioServico usuarioServ, PessoaFisicaServico pessoaFisicaServico) {
 		super(usuarioServ);
 		this.pessoaFisicaServico = pessoaFisicaServico;
 		WebServiceValidador validadorBasico = new WebServiceValidador();

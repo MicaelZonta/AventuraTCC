@@ -20,7 +20,7 @@ public class Missao implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idMissao;
+	private Long idMissao;
 
 	@Column(name = "nome", unique = false, nullable = false, length = 25)
 	private String nome;
@@ -35,10 +35,16 @@ public class Missao implements Serializable {
 	private Date dataTermino;
 
 	@Column(name = "maxAventureiro", unique = false, nullable = false)
-	private int maxAventureiro;
+	private Integer maxAventureiro;
 
 	@Column(name = "idPessoa", unique = false, nullable = false)
-	long idPessoa;
+	private Long idPessoa;
+
+	@Column(name = "latitude", unique = false, nullable = false)
+	private Double latitude;
+
+	@Column(name = "longitude", unique = false, nullable = false)
+	private Double longitude;
 
 	@OneToMany(mappedBy = "idMissao", targetEntity = MissaoDificuldade.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<MissaoDificuldade> listaDificuldades;
@@ -49,11 +55,11 @@ public class Missao implements Serializable {
 	@OneToMany(mappedBy = "idMissao", targetEntity = MissaoTarefa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<MissaoTarefa> listaTarefas;
 
-	public long getIdMissao() {
+	public Long getIdMissao() {
 		return idMissao;
 	}
 
-	public void setIdMissao(long idMissao) {
+	public void setIdMissao(Long idMissao) {
 		this.idMissao = idMissao;
 	}
 
@@ -89,19 +95,19 @@ public class Missao implements Serializable {
 		this.dataTermino = dataTermino;
 	}
 
-	public int getMaxAventureiro() {
+	public Integer getMaxAventureiro() {
 		return maxAventureiro;
 	}
 
-	public void setMaxAventureiro(int maxAventureiro) {
+	public void setMaxAventureiro(Integer maxAventureiro) {
 		this.maxAventureiro = maxAventureiro;
 	}
 
-	public long getIdPessoa() {
+	public Long getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(long idPessoa) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 
@@ -127,6 +133,22 @@ public class Missao implements Serializable {
 
 	public void setListaTarefas(List<MissaoTarefa> listaTarefas) {
 		this.listaTarefas = listaTarefas;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public static long getSerialversionuid() {

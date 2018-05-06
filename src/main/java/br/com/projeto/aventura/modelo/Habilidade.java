@@ -15,16 +15,16 @@ public class Habilidade implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idHabilidade;
+	private Long idHabilidade;
 
 	@Column(name = "nome", unique = true, nullable = false, length = 25)
 	private String nome;
 
-	public long getIdHabilidade() {
+	public Long getIdHabilidade() {
 		return idHabilidade;
 	}
 
-	public void setIdHabilidade(long idHabilidade) {
+	public void setIdHabilidade(Long idHabilidade) {
 		this.idHabilidade = idHabilidade;
 	}
 
@@ -39,5 +39,7 @@ public class Habilidade implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
 
 }

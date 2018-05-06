@@ -24,10 +24,10 @@ public abstract class Pessoa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long idPessoa;
+	Long idPessoa;
 
 	@Column(name = "idUsuario", unique = true, nullable = false)
-	long idUsuario;
+	Long idUsuario;
 
 	@Column(name = "email", unique = true, nullable = false, length = 255)
 	private String email;
@@ -36,19 +36,19 @@ public abstract class Pessoa implements Serializable {
 	@JoinColumn(name = "idPessoa")
 	private Celular celular;
 
-	public long getIdPessoa() {
+	public Long getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(long idPessoa) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 
-	public long getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(long idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

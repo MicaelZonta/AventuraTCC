@@ -21,13 +21,13 @@ public class MissaoProgresso implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idMissaoProgresso;
+	private Long idMissaoProgresso;
 
 	@Column(name = "idMissao", unique = false, nullable = false)
-	private long idMissao;
+	private Long idMissao;
 
-	@Column(name = "idMissao", unique = false, nullable = false)
-	private long idPessoa;
+	@Column(name = "idPessoa", unique = false, nullable = false)
+	private Long idPessoa;
 
 	@OneToMany(mappedBy = "idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
@@ -38,27 +38,27 @@ public class MissaoProgresso implements Serializable {
 	@OneToMany(mappedBy = "idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<TarefaProgresso> tarefas;
 
-	public long getIdMissaoProgresso() {
+	public Long getIdMissaoProgresso() {
 		return idMissaoProgresso;
 	}
 
-	public void setIdMissaoProgresso(long idMissaoProgresso) {
+	public void setIdMissaoProgresso(Long idMissaoProgresso) {
 		this.idMissaoProgresso = idMissaoProgresso;
 	}
 
-	public long getIdMissao() {
+	public Long getIdMissao() {
 		return idMissao;
 	}
 
-	public void setIdMissao(long idMissao) {
+	public void setIdMissao(Long idMissao) {
 		this.idMissao = idMissao;
 	}
 
-	public long getIdPessoa() {
+	public Long getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(long idPessoa) {
+	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
 	}
 

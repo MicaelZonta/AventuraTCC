@@ -11,24 +11,24 @@ public class Nivel implements Serializable {
 	private static final long serialVersionUID = -7366405306829190127L;
 
 	@Column(name = "level", unique = false, nullable = false)
-	private long level;
+	private Long level;
 
 	@Column(name = "experiencia", unique = false, nullable = false)
-	private long experiencia;
+	private Long experiencia;
 
-	public long getLevel() {
+	public Long getLevel() {
 		return level;
 	}
 
-	public void setLevel(long level) {
+	public void setLevel(Long level) {
 		this.level = level;
 	}
 
-	public long getExperiencia() {
+	public Long getExperiencia() {
 		return experiencia;
 	}
 
-	public void setExperiencia(long experiencia) {
+	public void setExperiencia(Long experiencia) {
 		this.experiencia = experiencia;
 	}
 

@@ -12,35 +12,35 @@ public class Posicao implements Serializable {
 	private static final long serialVersionUID = -3080946180624798351L;
 
 	@Id
-	private long idUnidade;
+	private Long idUnidade;
 
 	@Column(name = "latitude")
-	private double latitude;
+	private Double latitude;
 
 	@Column(name = "longitude")
-	private double longitude;
+	private Double longitude;
 
-	public long getIdUnidade() {
+	public Long getIdUnidade() {
 		return idUnidade;
 	}
 
-	public void setIdUnidade(long idUnidade) {
+	public void setIdUnidade(Long idUnidade) {
 		this.idUnidade = idUnidade;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
