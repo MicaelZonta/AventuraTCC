@@ -21,3 +21,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+src/main/resources/hibernate.cfg.xml
+target/classes/hibernate.cfg.xml
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/br.com.projeto/aventura/pom.properties
