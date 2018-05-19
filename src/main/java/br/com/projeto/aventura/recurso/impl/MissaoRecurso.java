@@ -38,15 +38,15 @@ public class MissaoRecurso extends WebService {
 	}
 
 	public static String getUrlCadastrar() {
-		return "/" + URL_HOME + "/" + URL_CADASTRAR;
+		return getUrlHome() + "/" + URL_CADASTRAR;
 	}
 
 	public static String getUrlEditar() {
-		return "/" + URL_HOME + "/" + URL_EDITAR;
+		return getUrlHome() + "/" + URL_EDITAR;
 	}
 
 	public static String getUrlEncontrar() {
-		return "/" + URL_HOME + "/" + URL_ENCONTRAR;
+		return getUrlHome() + "/" + URL_ENCONTRAR;
 	}
 
 	public MissaoRecurso(UsuarioServico usuarioServ, MissaoServico missaoServico, PessoaServico pessoaServico) {
@@ -61,7 +61,7 @@ public class MissaoRecurso extends WebService {
 		adicionarValidador(URL_ENCONTRAR, validadorBasico);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = URL_CADASTRAR)
+	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
 	public Missao cadastrarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
 		Usuario usuario = getUsuario(URL_CADASTRAR);
 

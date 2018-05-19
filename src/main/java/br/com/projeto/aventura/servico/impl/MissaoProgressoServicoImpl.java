@@ -110,12 +110,27 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 	}
 
 	@Override
-	public MissaoProgresso completarTarefa(Missao missao, PessoaFisica pessoaFisica, TarefaProgresso tarefa) throws Exception {
+	public MissaoProgresso completarTarefa(Missao missao, PessoaFisica pessoaFisica, TarefaProgresso tarefa)
+			throws Exception {
 		MissaoProgresso progresso = null;
 		try {
 			progresso = buscarMissaoProgressoDisponivel(missao, pessoaFisica);
 			tarefa.setIdSituacao(Situacao.COMPLETA);
-			progressoRepositorio.atualizarMissaoProgresso(progresso);
+
+			boolean todasTarefasCompletas = true;
+
+			for (TarefaProgresso task : progresso.getTarefas()) {
+				if (task.getIdSituacao() != Situacao.COMPLETA) {
+					todasTarefasCompletas = false;
+				}
+			}
+
+			if (todasTarefasCompletas) {
+				progresso.setIdSituacao(Situacao.COMPLETA);
+			}
+			
+			progresso = progressoRepositorio.atualizarMissaoProgresso(progresso);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,10 +142,10 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 	}
 
 	@Override
-	public MissaoProgresso pausarMissao(Missao missao, PessoaFisica pessoaFisica ,Pessoa pessoa) throws Exception {
+	public MissaoProgresso pausarMissao(Missao missao, PessoaFisica pessoaFisica, Pessoa pessoa) throws Exception {
 		MissaoProgresso progresso = null;
 		try {
-			
+
 			progresso = buscarMissaoProgressoDisponivel(missao, pessoaFisica);
 			progresso.setIdSituacao(Situacao.PAUSA);
 			progressoRepositorio.atualizarMissaoProgresso(progresso);
@@ -191,6 +206,5 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 		}
 		return progressosList;
 	}
-	
 
 }

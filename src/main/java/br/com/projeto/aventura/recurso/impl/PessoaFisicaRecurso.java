@@ -34,15 +34,15 @@ public class PessoaFisicaRecurso extends WebService {
 	}
 
 	public static String getUrlCadastrar() {
-		return "/" + URL_HOME + "/" + URL_CADASTRAR;
+		return getUrlHome() + "/" + URL_CADASTRAR;
 	}
 
 	public static String getUrlEditar() {
-		return "/" + URL_HOME + "/" + URL_EDITAR;
+		return getUrlHome() + "/" + URL_EDITAR;
 	}
 
 	public static String getUrlEncontrar() {
-		return "/" + URL_HOME + "/" + URL_ENCONTRAR;
+		return getUrlHome() + "/" + URL_ENCONTRAR;
 	}
 
 	public PessoaFisicaRecurso(UsuarioServico usuarioServ, PessoaFisicaServico pessoaFisicaServico) {
