@@ -16,6 +16,8 @@ public interface MissaoRepositorio {
 
 	public Missao deletarMissao(Missao missao) throws Exception;
 
+	public Missao encontrarMissao(Long idMissao) throws Exception;
+	
 	public List<Missao> listarMissao(PessoaFisica pessoa, Missao missao) throws Exception;
 
 }

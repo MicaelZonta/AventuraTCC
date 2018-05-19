@@ -11,9 +11,8 @@ import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.MissaoDificuldade;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.MissaoTarefa;
-import br.com.projeto.aventura.modelo.Usuario;
+import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.repositorio.MissaoRepositorio;
-import br.com.projeto.aventura.repositorio.MissaoTarefaRepositorio;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;
 import br.com.projeto.aventura.servico.MissaoServico;
 
@@ -99,7 +98,7 @@ public class MissaoServicoImpl implements MissaoServico {
 	}
 
 	@Override
-	public List<Missao> listarMissao(Usuario usuario, Missao missao) throws Exception {
+	public List<Missao> listarMissao(PessoaFisica usuario, Missao missao) throws Exception {
 		List<Missao> missaoLista = null;
 
 		try {
@@ -113,5 +112,18 @@ public class MissaoServicoImpl implements MissaoServico {
 		}
 
 		return missaoLista;
+	}
+
+	@Override
+	public Missao encontrarMissao(long idMissao) throws Exception {
+		Missao missao = null;
+		try {
+			missao = missaoRepositorio.encontrarMissao(idMissao);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return missao;
 	}
 }

@@ -82,10 +82,83 @@ CREATE TABLE Unidade(
 ## Posicao
 CREATE TABLE Posicao(
     idUnidade bigint NOT NULL,
+    latitude bigint NOT NULL,
+    longitude bigint NOT NULL,
     primary key(idUnidade)
 );
 
+## Avaliacao
+CREATE TABLE Avaliacao(
+    idMissaoProgresso bigint NOT NULL,
+    idPessoa bigint NOT NULL,
+    estrelas tinyint NOT NULL,
+    descricao varchar(50) NOT NULL,
+    primary key(idMissaoProgresso, idPessoa)
+);
 
+## Habilidade
+CREATE TABLE Habilidade(
+    idHabilidade bigint NOT NULL,
+    nome varchar(25) NOT NULL,
+    primary key(idHabilidade)
+);
+
+## Missao
+CREATE TABLE Missao(
+    idMissao bigint NOT NULL AUTO_INCREMENT,
+    nome varchar(25) NOT NULL,
+    descricao varchar(500) NOT NULL,
+    dataCriacao datetime NOT NULL,
+    dataTermino datetime NULL,
+    maxAventureiros int NOT NULL,
+    idPessoa bigint NOT NULL,
+    latitude double NOT NULL,
+    longitude double NOT NULL,
+    primary key(idMissao)
+);
+
+## Missao_Dificuldade
+CREATE TABLE Missao_Dificuldade(
+    idMissaoDificuldade bigint NOT NULL,
+    idMissao bigint NOT NULL,
+    level int NOT NULL,
+    experiencia int NOT NULL,
+    idHabilidade bigint NOT NULL,
+    primary key(idMissaoDificuldade)
+);
+
+## Missao_Dificuldade
+CREATE TABLE Missao_Progresso(
+    idMissaoProgresso bigint NOT NULL AUTO_INCREMENT,
+    idMissao bigint NOT NULL,
+    idPessoa bigint NOT NULL,
+    idSituacao int NOT NULL,
+    primary key(idMissaoProgresso)
+);
+
+## Missao_Tarefa
+CREATE TABLE Missao_Tarefa(
+    idMissaoTarefa bigint NOT NULL,
+    idMissao bigint NOT NULL,
+    nome varchar(20) NOT NULL,
+    descricao varchar(100) NOT NULL,
+    primary key(idMissaoTarefa)
+);
+
+## Situacao
+CREATE TABLE Situacao(
+    idSituacao int NOT NULL AUTO_INCREMENT,
+    nome varchar(20) NOT NULL,
+    primary key(idSituacao)
+);
+
+## Tarefa_Progresso
+CREATE TABLE Tarefa_Progresso(
+    idMissaoProgresso bigint NOT NULL,
+    idMissaoTarefa bigint NOT NULL,
+    idSituacao int NOT NULL,
+    primary key(idMissaoProgresso,idMissaoTarefa)
+);
 
 /*
 	CREATE FOREIGN KEYS
@@ -123,3 +196,51 @@ ADD FOREIGN KEY (idUnidade) REFERENCES Unidade(idUnidade);
 ##Posicao
 ALTER TABLE Posicao
 ADD FOREIGN KEY (idUnidade) REFERENCES Unidade(idUnidade);
+
+## Avaliacao
+ALTER TABLE Avaliacao
+ADD FOREIGN KEY (idMissaoProgresso) REFERENCES Missao_Progresso(idMissaoProgresso);
+
+ALTER TABLE Avaliacao
+ADD FOREIGN KEY (idPessoa) REFERENCES Pessoa(idPessoa);
+
+## Missao
+ALTER TABLE Missao
+ADD FOREIGN KEY (idPessoa) REFERENCES Pessoa(idPessoa);
+
+## Missao_Dificuldade
+ALTER TABLE Missao_Dificuldade
+ADD FOREIGN KEY (idMissao) REFERENCES Missao(idMissao);
+
+ALTER TABLE Missao_Dificuldade
+ADD FOREIGN KEY (idHabilidade) REFERENCES Habilidade(idHabilidade);
+
+## Missao_Progresso
+ALTER TABLE Missao_Progresso
+ADD FOREIGN KEY (idMissao) REFERENCES Missao(idMissao);
+
+ALTER TABLE Missao_Progresso
+ADD FOREIGN KEY (idPessoa) REFERENCES Pessoa(idPessoa);
+
+ALTER TABLE Missao_Progresso
+ADD FOREIGN KEY (idSituacao) REFERENCES Situacao(idSituacao);
+
+## Missao_Tarefa
+ALTER TABLE Missao_Tarefa
+ADD FOREIGN KEY (idMissao) REFERENCES Missao(idMissao);
+
+## Tarefa_Progresso
+ALTER TABLE Tarefa_Progresso
+ADD FOREIGN KEY (idMissaoProgresso) REFERENCES Missao_Progresso(idMissaoProgresso);
+
+ALTER TABLE Tarefa_Progresso
+ADD FOREIGN KEY (idMissaoTarefa) REFERENCES Missao_Tarefa(idMissaoTarefa);
+
+ALTER TABLE Tarefa_Progresso
+ADD FOREIGN KEY (idSituacao) REFERENCES Situacao(idSituacao);
+
+/*
+	CREATE UNIQUE CONSTRAINTS
+*/
+
+ALTER TABLE Missao_Progresso ADD CONSTRAINT UK_Missao_Progresso UNIQUE (idPessoa, idMissao);

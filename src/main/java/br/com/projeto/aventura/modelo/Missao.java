@@ -13,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Entity(name = "Missao")
 public class Missao implements Serializable {
 
@@ -155,4 +158,15 @@ public class Missao implements Serializable {
 		return serialVersionUID;
 	}
 
+	public String toString() {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonInString = "";
+			jsonInString = mapper.writeValueAsString(this);
+			return jsonInString;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

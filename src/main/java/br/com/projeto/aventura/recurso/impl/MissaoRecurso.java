@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
-import br.com.projeto.aventura.modelo.Celular;
-import br.com.projeto.aventura.modelo.PessoaFisica;
+import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.Usuario;
+import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.recurso.RoleEnum;
 import br.com.projeto.aventura.recurso.WebService;
 import br.com.projeto.aventura.recurso.WebServiceValidador;
-import br.com.projeto.aventura.servico.PessoaFisicaServico;
+import br.com.projeto.aventura.servico.MissaoServico;
+import br.com.projeto.aventura.servico.PessoaServico;
 import br.com.projeto.aventura.servico.UsuarioServico;
 
 @RestController
@@ -28,7 +29,9 @@ public class MissaoRecurso extends WebService {
 	public static final String URL_ENCONTRAR = "encontrar";
 
 	@Autowired
-	PessoaFisicaServico pessoaFisicaServico;
+	MissaoServico missaoServico;
+	@Autowired
+	PessoaServico pessoaServico;
 
 	public static String getUrlHome() {
 		return "/" + URL_HOME;
@@ -46,60 +49,62 @@ public class MissaoRecurso extends WebService {
 		return "/" + URL_HOME + "/" + URL_ENCONTRAR;
 	}
 
-	public MissaoRecurso(UsuarioServico usuarioServ, PessoaFisicaServico pessoaFisicaServico) {
+	public MissaoRecurso(UsuarioServico usuarioServ, MissaoServico missaoServico, PessoaServico pessoaServico) {
 		super(usuarioServ);
-		this.pessoaFisicaServico = pessoaFisicaServico;
+		this.missaoServico = missaoServico;
+		this.pessoaServico = pessoaServico;
 		WebServiceValidador validadorBasico = new WebServiceValidador();
-		validadorBasico.addAutorizacao(RoleEnum.ADMIN, RoleEnum.USER);
+		validadorBasico.addAutorizacao(RoleEnum.USER);
 		adicionarValidador(URL_CADASTRAR, validadorBasico);
 		adicionarValidador(URL_EDITAR, validadorBasico);
+		adicionarValidador(URL_DELETAR, validadorBasico);
 		adicionarValidador(URL_ENCONTRAR, validadorBasico);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
-	public PessoaFisica cadastrarPessoaFisica(@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica) {
+	@RequestMapping(method = RequestMethod.PUT, value = URL_CADASTRAR)
+	public Missao cadastrarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
 		Usuario usuario = getUsuario(URL_CADASTRAR);
 
-		pessoaFisica.setIdUsuario(usuario.getIdUsuario());
-		Celular cel = pessoaFisica.getCelular();
-		pessoaFisica.setCelular(null);
-
 		try {
-			pessoaFisica = pessoaFisicaServico.cadastrarPessoaFisica(pessoaFisica);
-			pessoaFisica.setCelular(cel);
-			cel.setIdPessoa(pessoaFisica.getIdPessoa());
-			pessoaFisica = pessoaFisicaServico.editarPessoaFisica(pessoaFisica);
+			Pessoa pessoa = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+			missao.setIdPessoa(pessoa.getIdPessoa());
+			missao = missaoServico.cadastrarMissao(missao);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
 
-		return pessoaFisica;
+		return missao;
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = URL_EDITAR)
-	public PessoaFisica editarPessoaFisica(@RequestParam(value = "pessoaFisica", defaultValue = "")PessoaFisica pessoaFisica2 ) {
+	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
+	public Missao editarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
 
 		Usuario usuario = getUsuario(URL_EDITAR);
+		Missao missaoOg = null;
 
-		PessoaFisica pessoaFisica = null;
 		try {
-			pessoaFisica = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+			Pessoa pessoa = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+			missaoOg = missaoServico.encontrarMissao(missao.getIdMissao());
+			if (missaoOg.getIdPessoa() != missao.getIdPessoa()) {
+				throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+			}
+			if (missaoOg.getIdPessoa() != pessoa.getIdPessoa()) {
+				throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+			}
+
 			boolean update = false;
-			if (pessoaFisica2.getEmail().length() != 0) {
-				pessoaFisica.setEmail(pessoaFisica2.getEmail());
+			if (missao.getNome() != null && missao.getNome().length() > 0) {
+				missaoOg.setNome(missao.getNome());
 				update = true;
 			}
-			if (pessoaFisica2.getCelular().getNumero().length() != 0) {
-				pessoaFisica.getCelular().setNumero(pessoaFisica2.getCelular().getNumero());
+			if (missao.getDescricao() != null && missao.getDescricao().length() > 0) {
+				missaoOg.setDescricao(missao.getDescricao());
 				update = true;
 			}
-			if (pessoaFisica2.getCelular().getDdd() != null) {
-				pessoaFisica.getCelular().setDdd(pessoaFisica2.getCelular().getDdd());
-				update = true;
-			}
+
 			if (!update) {
-				throw new RuntimeException();
+				throw new HttpClientErrorException(HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -107,26 +112,52 @@ public class MissaoRecurso extends WebService {
 		}
 
 		try {
-			pessoaFisica = pessoaFisicaServico.editarPessoaFisica(pessoaFisica);
+			missaoOg = missaoServico.editarMissao(missaoOg);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
 
-		return pessoaFisica;
+		return missaoOg;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = URL_ENCONTRAR)
-	public PessoaFisica encontrarPessoaFisica() {
-		Usuario usuario = getUsuario(URL_ENCONTRAR);
-		PessoaFisica pessoaFisica = null;
+	@RequestMapping(method = RequestMethod.DELETE, value = URL_DELETAR)
+	public Missao excluirMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+
+		Usuario usuario = getUsuario(URL_DELETAR);
+		Missao missaoOg = null;
+
 		try {
-			pessoaFisica = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+			Pessoa pessoa = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+			missaoOg = missaoServico.encontrarMissao(missao.getIdMissao());
+			if (missaoOg.getIdPessoa() != missao.getIdPessoa()) {
+				throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+			}
+			if (missaoOg.getIdPessoa() != pessoa.getIdPessoa()) {
+				throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+			}
+
+			missaoOg = missaoServico.deletarMissao(missaoOg);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+		}
+
+		return missaoOg;
+	}
+
+	@SuppressWarnings("unused")
+	@RequestMapping(method = RequestMethod.GET, value = URL_ENCONTRAR)
+	public Missao encontrarPessoaFisica(@RequestParam(value = "idMissao", defaultValue = "") Long idMissao) {
+		Usuario usuario = getUsuario(URL_ENCONTRAR);
+		Missao missaoOg = null;
+		try {
+			missaoOg = missaoServico.encontrarMissao(idMissao);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
-		return pessoaFisica;
+		return missaoOg;
 	}
 
 }

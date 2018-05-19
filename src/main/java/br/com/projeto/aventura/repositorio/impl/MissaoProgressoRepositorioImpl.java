@@ -2,12 +2,15 @@ package br.com.projeto.aventura.repositorio.impl;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
+import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.repositorio.MissaoProgressoRepositorio;
 
@@ -23,37 +26,64 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 	@Override
 	public MissaoProgresso cadastrarMissaoProgresso(MissaoProgresso missaoProgresso) throws Exception {
 		missaoProgresso = inserir(missaoProgresso);
-		return null;
+		return missaoProgresso;
 	}
 
 	@Override
 	public MissaoProgresso atualizarMissaoProgresso(MissaoProgresso missaoProgresso) throws Exception {
 		missaoProgresso = atualizar(missaoProgresso.getIdMissao(), missaoProgresso);
-		return null;
+		return missaoProgresso;
 	}
 
 	@Override
 	public MissaoProgresso cancelarMissaoProgresso(MissaoProgresso missaoProgresso) throws Exception {
 		missaoProgresso = excluir(missaoProgresso);
-		return null;
+		return missaoProgresso;
 	}
 
 	@Override
-	public MissaoProgresso buscarMissaoProgresso(Missao missao, Usuario usuario) throws Exception {
-		//
-		return null;
+	public MissaoProgresso buscarMissaoProgresso(Missao missao, PessoaFisica pessoaFisica) throws Exception {
+		openSession();
+		StringBuilder sb = new StringBuilder("SELECT mp.* FROM missao_progresso mp ");
+		sb.append("INNER JOIN usuario_pessoa up ");
+		sb.append("WHERE mp.idMissao = :idMissao AND up.idPessoa = :idPessoa ");
+
+		Query query = getSession().createNativeQuery(sb.toString(), MissaoProgresso.class);
+		query.setParameter("idMissao", missao.getIdMissao());
+		query.setParameter("idPessoa", pessoaFisica.getIdPessoa());
+
+		MissaoProgresso mp = (MissaoProgresso) query.getSingleResult();
+		closeSession();
+		return mp;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<MissaoProgresso> listarMissaoProgresso(Usuario usuario) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MissaoProgresso> listarMissaoProgresso(PessoaFisica pessoaFisica) throws Exception {
+		openSession();
+		StringBuilder sb = new StringBuilder("SELECT * FROM missao_progresso mp ");
+		sb.append("INNER JOIN usuario_pessoa up ");
+		sb.append("WHERE up.idUsuario = :idUsuario ");
+
+		Query query = getSession().createNativeQuery(sb.toString(), MissaoProgresso.class);
+		query.setParameter("idUsuario", pessoaFisica.getIdPessoa());
+
+		List<MissaoProgresso> mp = query.getResultList();
+		closeSession();
+		return mp;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MissaoProgresso> listarMissaoProgresso(Missao missao) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		openSession();
+		StringBuilder sb = new StringBuilder("SELECT mp FROM missao_progresso mp WHERE idMissao = :idMissao ");
+		Query query = getSession().createQuery(sb.toString(), MissaoProgresso.class);
+		query.setParameter("idUsuario", missao.getIdMissao());
+
+		List<MissaoProgresso> mp = query.getResultList();
+		closeSession();
+		return mp;
 	}
 
 }

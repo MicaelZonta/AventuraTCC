@@ -38,6 +38,7 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 		return missao;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Missao> listarMissao(PessoaFisica pessoa, Missao missao) throws Exception {
 		openSession();
@@ -73,6 +74,12 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 		List<Missao> missaoList = query.getResultList();
 		closeSession();
 		return missaoList;
+	}
+
+	@Override
+	public Missao encontrarMissao(Long idMissao) throws Exception {
+		Missao missao = buscaPorId(idMissao);
+		return missao;
 	}
 
 }

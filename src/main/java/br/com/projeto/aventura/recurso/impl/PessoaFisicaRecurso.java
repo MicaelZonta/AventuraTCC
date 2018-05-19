@@ -55,7 +55,7 @@ public class PessoaFisicaRecurso extends WebService {
 		adicionarValidador(URL_ENCONTRAR, validadorBasico);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
+	@RequestMapping(method = RequestMethod.PUT, value = URL_CADASTRAR)
 	public PessoaFisica cadastrarPessoaFisica(@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica) {
 		Usuario usuario = getUsuario(URL_CADASTRAR);
 
@@ -76,7 +76,7 @@ public class PessoaFisicaRecurso extends WebService {
 		return pessoaFisica;
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = URL_EDITAR)
+	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
 	public PessoaFisica editarPessoaFisica(@RequestParam(value = "pessoaFisica", defaultValue = "")PessoaFisica pessoaFisica2 ) {
 
 		Usuario usuario = getUsuario(URL_EDITAR);

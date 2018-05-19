@@ -3,6 +3,7 @@ package br.com.projeto.aventura.modelo;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,12 +16,8 @@ public class TarefaProgresso implements Serializable {
 
 	private static final long serialVersionUID = -1767930338175401513L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idTarefaProgresso;
-
-	@Column(name = "idMissaoProgresso", unique = false, nullable = false)
-	private Long idMissaoProgresso;
+	@EmbeddedId
+	AvaliacaoChave idAvaliacao;
 
 	@Column(name = "idTarefa", unique = false, nullable = false)
 	private Long idTarefa;
@@ -28,20 +25,12 @@ public class TarefaProgresso implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private Situacao idSituacao;
 
-	public Long getIdTarefaProgresso() {
-		return idTarefaProgresso;
+	public AvaliacaoChave getIdAvaliacao() {
+		return idAvaliacao;
 	}
 
-	public void setIdTarefaProgresso(Long idTarefaProgresso) {
-		this.idTarefaProgresso = idTarefaProgresso;
-	}
-
-	public Long getIdMissaoProgresso() {
-		return idMissaoProgresso;
-	}
-
-	public void setIdMissaoProgresso(Long idMissaoProgresso) {
-		this.idMissaoProgresso = idMissaoProgresso;
+	public void setIdAvaliacao(AvaliacaoChave idAvaliacao) {
+		this.idAvaliacao = idAvaliacao;
 	}
 
 	public Long getIdTarefa() {
@@ -63,7 +52,5 @@ public class TarefaProgresso implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	
 
 }

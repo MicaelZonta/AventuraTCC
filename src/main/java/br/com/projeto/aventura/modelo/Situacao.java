@@ -1,7 +1,7 @@
 package br.com.projeto.aventura.modelo;
 
 public enum Situacao {
-	INICIADO(0), PAUSA(1), COMPLETA(2), ESPERA(3), CANCELADO(4), DESISTENCIA(5);
+	INICIADO(1), PAUSA(2), COMPLETA(3), ESPERA(4), CANCELADO(5), DESISTENCIA(6);
 
 	private Integer item;
 
@@ -11,6 +11,10 @@ public enum Situacao {
 
 	public Integer getItem() {
 		return item;
+	}
+
+	public void setItem(Integer item) {
+		this.item = item;
 	}
 
 }

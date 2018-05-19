@@ -68,7 +68,7 @@ public class UsuarioRecurso extends WebService {
 		return usuario.toString();
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = URL_EDITAR)
+	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
 	public String editarUsuario(@RequestParam(value = "password", defaultValue = "") String password) {
 		Usuario usuario = getUsuario(URL_EDITAR);
 		usuario.setPassword(password);

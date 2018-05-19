@@ -29,13 +29,13 @@ public class MissaoProgresso implements Serializable {
 	@Column(name = "idPessoa", unique = false, nullable = false)
 	private Long idPessoa;
 
-	@OneToMany(mappedBy = "idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idAvaliacao.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 
 	@Enumerated(EnumType.ORDINAL)
 	private Situacao idSituacao;
 
-	@OneToMany(mappedBy = "idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idAvaliacao.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<TarefaProgresso> tarefas;
 
 	public Long getIdMissaoProgresso() {

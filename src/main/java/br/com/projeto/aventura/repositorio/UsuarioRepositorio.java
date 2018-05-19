@@ -8,4 +8,5 @@ public interface UsuarioRepositorio {
 	public Usuario adicionarUsuario(Usuario usuario) throws Exception;
 	public Usuario editarUsuario(Usuario usuario) throws Exception;
 	
+	
 }

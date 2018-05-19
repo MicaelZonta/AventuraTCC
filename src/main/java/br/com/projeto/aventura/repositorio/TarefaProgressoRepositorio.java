@@ -1,10 +1,8 @@
 package br.com.projeto.aventura.repositorio;
 
-import br.com.projeto.aventura.modelo.Celular;
 import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.MissaoTarefa;
-import br.com.projeto.aventura.modelo.Usuario;
 
 public interface TarefaProgressoRepositorio {
 
