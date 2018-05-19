@@ -1,11 +1,14 @@
 package br.com.projeto.aventura.modelo;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,24 +18,28 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity(name = "Usuario")
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = -2875037739887260421L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 
 	@Column(name = "favor")
 	private Long favor;
 
-	@Column(name = "username", length = 25)
+	@Column(name = "username", unique = true, nullable = false, length = 25)
 	private String username;
 
-	@Column(name = "password", length = 255)
+	@Column(name = "password", nullable = false, length = 255)
 	private String password;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinTable(name = "Usuario_Role", joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "idRole", referencedColumnName = "idRole"))
 	private Collection<Role> roles;
 
+<<<<<<< HEAD
 	public Usuario(String username, String password) {
 		setUsername(username);
 		setPassword(password);
@@ -48,6 +55,11 @@ public class Usuario {
 	}
 	
 	
+=======
+	@Column(name = "ativo")
+	private boolean ativo;
+
+>>>>>>> QuestService
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -87,7 +99,19 @@ public class Usuario {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-	
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String toString() {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -99,6 +123,4 @@ public class Usuario {
 			return "";
 		}
 	}
-
-
 }

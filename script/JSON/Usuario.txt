@@ -1,0 +1,12 @@
+=============Login
+{"username":"user","password":"password"}
+{"username":"Micael","password":"password"}
+
+=============Cadastrar // Senha = password
+{"username":"Micael","password":"$2a$10$ZmetWuFktyIZzg24lbJrgu1kRVNYElvDD.IN3U92p/2UuHG75u6Gy","roles":[{"idRole":1,"nome":"ROLE_USER"}]}
+
+=============Editar // Senha = password
+{"password":"$2a$10$ZmetWuFktyIZzg24lbJrgu1kRVNYElvDD.IN3U92p/2UuHG75u6Gy"}
+
+=============Deletar //Apenas estar logado
+{}

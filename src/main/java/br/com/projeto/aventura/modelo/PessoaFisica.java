@@ -1,27 +1,42 @@
 package br.com.projeto.aventura.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 
-public class PessoaFisica extends Pessoa {
+@Entity(name = "Pessoa_Fisica")
+@PrimaryKeyJoinColumn(name = "idPessoa")
+public class PessoaFisica extends Pessoa implements Serializable {
 
-	// Atributos Pessoais
+	private static final long serialVersionUID = 3780047876730324595L;
+
+	@Column(name = "nome", nullable = false, length = 20)
 	private String nome;
-	private String sobrenome;
-	private Date dataNascimento;
-	private Aventureiro aventureiro;
-	private String CPF;
 
-	public PessoaFisica(String nome, String sobrenome, Date dataNascimento, 
-			Aventureiro aventureiro, String CPF, String email, Celular celular) {
-		super(email, celular);
-		setNome(nome);
-		setSobrenome(sobrenome);
-		setDataNascimento(dataNascimento);
-		setAventureiro(aventureiro);
-		setCPF(CPF);
-	}
+	@Column(name = "sobrenome", nullable = false, length = 60)
+	private String sobrenome;
+
+	@Column(name = "dataNascimento", nullable = false)
+	private Date dataNascimento;	
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idPessoa")
+	private Aventureiro aventureiro;
+
+	@Column(name = "CPF", unique = true, nullable = false, length = 11)
+	private String CPF;
 
 	public String getNome() {
 		return nome;
@@ -63,4 +78,19 @@ public class PessoaFisica extends Pessoa {
 		CPF = cPF;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String toString() {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonInString = "";
+			jsonInString = mapper.writeValueAsString(this);
+			return jsonInString;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

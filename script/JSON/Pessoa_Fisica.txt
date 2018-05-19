@@ -1,0 +1,8 @@
+=============Cadastrar
+{"email":"mock@outlook.com.br","celular":{"numero":"123456789","ddd":{"idDDD": 1,"numero":"011"}},"nome":"Micael","sobrenome":"Pinheiro","dataNascimento":1521434508530,"aventureiro":null,"cpf":"12345678911"}
+
+
+=============Editar
+{"email":"mock2@outlook.com.br"}
+
+=============Encontrar // Apenas estar logado
