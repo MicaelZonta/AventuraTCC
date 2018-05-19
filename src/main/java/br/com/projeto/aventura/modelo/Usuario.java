@@ -39,27 +39,9 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "Usuario_Role", joinColumns = @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "idRole", referencedColumnName = "idRole"))
 	private Collection<Role> roles;
 
-<<<<<<< HEAD
-	public Usuario(String username, String password) {
-		setUsername(username);
-		setPassword(password);
-	}
-	
-	public Usuario(String username, String password, Long favor) {
-		this(username, password);
-		setFavor(favor);
-	}
-	
-	public Usuario() {
-		
-	}
-	
-	
-=======
 	@Column(name = "ativo")
 	private boolean ativo;
 
->>>>>>> QuestService
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
