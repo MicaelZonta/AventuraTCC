@@ -15,7 +15,6 @@ import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.modelo.Situacao;
 import br.com.projeto.aventura.modelo.TarefaProgresso;
 import br.com.projeto.aventura.modelo.TarefaProgressoChave;
-import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.repositorio.MissaoProgressoRepositorio;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;

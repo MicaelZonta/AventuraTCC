@@ -20,7 +20,6 @@ import br.com.projeto.aventura.recurso.RoleEnum;
 import br.com.projeto.aventura.recurso.WebService;
 import br.com.projeto.aventura.recurso.WebServiceValidador;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;
-import br.com.projeto.aventura.servico.MissaoServico;
 import br.com.projeto.aventura.servico.PessoaFisicaServico;
 import br.com.projeto.aventura.servico.PessoaServico;
 import br.com.projeto.aventura.servico.UsuarioServico;
@@ -162,6 +161,7 @@ public class MissaoProgressoRecurso extends WebService {
 	@RequestMapping(method = RequestMethod.GET, value = URL_BUSCAR_PROGRESSO)
 	public MissaoProgresso buscarMissaoProgresso(@RequestParam(value = "missao", defaultValue = "") Missao missao,
 			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa) {
+		@SuppressWarnings("unused")
 		Usuario usuario = getUsuario(URL_BUSCAR_PROGRESSO);
 		MissaoProgresso mp = null;
 		try {
@@ -193,6 +193,7 @@ public class MissaoProgressoRecurso extends WebService {
 	@RequestMapping(method = RequestMethod.GET, value = URL_LISTAR_PROGRESSO_POR_MISSAO)
 	public List<MissaoProgresso> listarMissaoProgresso(
 			@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+		@SuppressWarnings("unused")
 		Usuario usuario = getUsuario(URL_LISTAR_PROGRESSO_POR_MISSAO);
 		List<MissaoProgresso> mp = null;
 		try {
