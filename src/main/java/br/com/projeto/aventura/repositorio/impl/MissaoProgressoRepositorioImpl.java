@@ -45,7 +45,7 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 	public MissaoProgresso buscarMissaoProgresso(Missao missao, PessoaFisica pessoaFisica) throws Exception {
 		openSession();
 		StringBuilder sb = new StringBuilder("SELECT mp.* FROM missao_progresso mp ");
-		sb.append("INNER JOIN usuario_pessoa up ");
+		sb.append("INNER JOIN usuario_pessoa up ON mp.idPessoa = up.idPessoa ");
 		sb.append("WHERE mp.idMissao = :idMissao AND up.idPessoa = :idPessoa ");
 
 		
@@ -65,12 +65,12 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 	@Override
 	public List<MissaoProgresso> listarMissaoProgresso(PessoaFisica pessoaFisica) throws Exception {
 		openSession();
-		StringBuilder sb = new StringBuilder("SELECT * FROM missao_progresso mp ");
-		sb.append("INNER JOIN usuario_pessoa up ");
-		sb.append("WHERE up.idUsuario = :idUsuario ");
+		StringBuilder sb = new StringBuilder("SELECT mp.* FROM missao_progresso mp ");
+		sb.append("INNER JOIN usuario_pessoa up ON mp.idPessoa = up.idPessoa ");
+		sb.append("WHERE up.idPessoa = :idPessoa ");
 
-		Query query = getSession().createNativeQuery(sb.toString());
-		query.setParameter("idUsuario", pessoaFisica.getIdPessoa());
+		Query query = getSession().createNativeQuery(sb.toString(), MissaoProgresso.class);
+		query.setParameter("idPessoa", pessoaFisica.getIdPessoa());
 
 		List<MissaoProgresso> mp = query.getResultList();
 		closeSession();

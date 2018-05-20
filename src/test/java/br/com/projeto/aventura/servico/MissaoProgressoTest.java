@@ -3,7 +3,6 @@ package br.com.projeto.aventura.servico;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +15,8 @@ import br.com.projeto.aventura.modelo.MissaoDificuldade;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.MissaoTarefa;
 import br.com.projeto.aventura.modelo.PessoaFisica;
+import br.com.projeto.aventura.modelo.SituacaoEnum;
+import br.com.projeto.aventura.modelo.TarefaProgresso;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.repositorio.impl.MissaoProgressoRepositorioImpl;
@@ -39,7 +40,8 @@ public class MissaoProgressoTest {
 	MissaoProgressoServico missaoProgressoServico;
 
 	public MissaoProgressoTest() {
-		MissaoProgressoServicoImpl mpSer = new MissaoProgressoServicoImpl(new MissaoProgressoRepositorioImpl(), new TarefaProgressoRepositorioImpl());
+		MissaoProgressoServicoImpl mpSer = new MissaoProgressoServicoImpl(new MissaoProgressoRepositorioImpl(),
+				new TarefaProgressoRepositorioImpl());
 		UsuarioServicoImpl usuarioSer = new UsuarioServicoImpl(new UsuarioRepositorioImpl());
 
 		missaoServico = new MissaoServicoImpl(new MissaoRepositorioImpl(), mpSer, usuarioSer);
@@ -114,33 +116,167 @@ public class MissaoProgressoTest {
 	}
 
 	@Test
-	public void testCancelarMissao() {
-		fail("Not yet implemented");
+	public void testCancelarMissao() throws Exception {
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("user");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		Pessoa giver = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+		assertNotNull(giver);
+
+		// Buscar Usuario
+		usuario = usuarioServico.encontrarUsuario("user");
+		assertNotNull(usuario);
+
+		// Busca Usuario
+		usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
+
+		// Busca missão
+		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
+		assertNotNull(missao);
+
+		MissaoProgresso mp = missaoProgressoServico.cancelarMissao(missao, taker, giver);
+		assertNotNull(mp);
+		assertTrue(mp.getSituacao().getIdSituacao() == SituacaoEnum.CANCELADO.getItem());
+
+		mp = missaoProgressoServico.atualizarMissaoProgresso(missao, giver, taker, SituacaoEnum.INICIADO.getItem());
 	}
 
 	@Test
-	public void testCompletarTarefa() {
-		fail("Not yet implemented");
+	public void testCompletarTarefa() throws Exception {
+
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
+
+		// Busca missão
+		Missao missao = missaoServico.encontrarMissao(mpFind.get(mpFind.size() - 1).getIdMissao());
+		assertNotNull(missao);
+
+		// Busca Tarefa
+		TarefaProgresso tarefa = mpFind.get(mpFind.size() - 1).getTarefas().get(0);
+
+		MissaoProgresso mp = missaoProgressoServico.completarTarefa(missao, taker, tarefa);
+		assertNotNull(mp);
+		assertTrue(mp.getTarefas().get(0).getSituacao().getIdSituacao() == SituacaoEnum.COMPLETA.getItem());
+
 	}
 
 	@Test
-	public void testPausarMissao() {
-		fail("Not yet implemented");
+	public void testPausarMissao() throws Exception {
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("user");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		Pessoa giver = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+		assertNotNull(giver);
+
+		// Buscar Usuario
+		usuario = usuarioServico.encontrarUsuario("user");
+		assertNotNull(usuario);
+
+		// Busca Usuario
+		usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
+
+		// Busca missão
+		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
+		assertNotNull(missao);
+
+		MissaoProgresso mp = missaoProgressoServico.atualizarMissaoProgresso(missao, giver, taker,
+				SituacaoEnum.INICIADO.getItem());
+
+		mp = missaoProgressoServico.pausarMissao(missao, taker, giver);
+		assertNotNull(mp);
+		assertTrue(mp.getSituacao().getIdSituacao() == SituacaoEnum.PAUSA.getItem());
+
+		mp = missaoProgressoServico.atualizarMissaoProgresso(missao, giver, taker, SituacaoEnum.INICIADO.getItem());
 	}
 
 	@Test
-	public void testBuscarMissaoProgresso() {
-		fail("Not yet implemented");
+	public void testBuscarMissaoProgresso() throws Exception {
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
+
+		// Busca missão
+		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
+		assertNotNull(missao);
+
+		MissaoProgresso mp = missaoProgressoServico.buscarMissaoProgresso(missao, taker);
+		assertNotNull(mp);
 	}
 
 	@Test
-	public void testListarMissaoProgressoPessoaFisica() {
-		fail("Not yet implemented");
+	public void testListarMissaoProgressoPessoaFisica() throws Exception {
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
 	}
 
 	@Test
-	public void testListarMissaoProgressoMissao() {
-		fail("Not yet implemented");
+	public void testListarMissaoProgressoMissao() throws Exception {
+		// Busca Usuario
+		Usuario usuario = usuarioServico.encontrarUsuario("micael");
+		assertNotNull(usuario);
+
+		// Busca Pessoa
+		PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+		assertNotNull(taker);
+
+		// Busca MP
+		List<MissaoProgresso> mpFind = missaoProgressoServico.listarMissaoProgresso(taker);
+		assertTrue(mpFind.size() > 0);
+
+		// Busca missão
+		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
+		assertNotNull(missao);
+
+		List<MissaoProgresso> missaoList = missaoProgressoServico.listarMissaoProgresso(missao);
+		assertNotNull(missaoList);
 	}
 
 }

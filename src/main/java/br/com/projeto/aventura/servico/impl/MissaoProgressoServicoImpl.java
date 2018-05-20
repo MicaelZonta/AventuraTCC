@@ -91,7 +91,7 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 		try {
 			progresso = buscarMissaoProgressoDisponivel(missao, pessoaFisica);
 
-			if (progresso.getIdPessoa() != pessoa.getIdPessoa()) {
+			if (missao.getIdPessoa() != pessoa.getIdPessoa()) {
 				throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
 			}
 
@@ -123,6 +123,14 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 			boolean todasTarefasCompletas = true;
 
 			for (TarefaProgresso task : progresso.getTarefas()) {
+				if (task.getTarefaProgressoChave().getIdMissaoProgresso() == tarefa.getTarefaProgressoChave()
+						.getIdMissaoProgresso()) {
+					if (task.getTarefaProgressoChave().getIdMissaoTarefa() == tarefa.getTarefaProgressoChave()
+							.getIdMissaoTarefa()) {
+						task.setSituacao(tarefa.getSituacao());
+					}
+				}
+
 				if (task.getSituacao().getIdSituacao() != SituacaoEnum.COMPLETA.getItem()) {
 					todasTarefasCompletas = false;
 				}
@@ -224,6 +232,33 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
 		}
 		return situacao;
+	}
+
+	@Override
+	public MissaoProgresso atualizarMissaoProgresso(Missao missao, Pessoa pessoa, PessoaFisica pessoaFisica,
+			int idSituacao) throws Exception {
+		MissaoProgresso progresso = progressoRepositorio.buscarMissaoProgresso(missao, pessoaFisica);
+
+		if (missao.getIdPessoa() != pessoa.getIdPessoa()) {
+			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		if (SituacaoEnum.getIntValue(idSituacao) == SituacaoEnum.DESISTENCIA) {
+			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
+
+		}
+		try {
+
+			Situacao situacao = encontrarSituacao(SituacaoEnum.getIntValue(idSituacao));
+			progresso.setSituacao(situacao);
+			progresso = progressoRepositorio.atualizarMissaoProgresso(progresso);
+
+		} catch (Exception e) {
+
+			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
+
+		}
+		return progresso;
 	}
 
 }

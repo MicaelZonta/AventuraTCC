@@ -36,7 +36,7 @@ public class MissaoProgressoRecurso extends WebService {
 	public static final String URL_BUSCAR_PROGRESSO = "buscar";
 	public static final String URL_LISTAR_PROGRESSO_POR_PESSOA = "listarpessoa";
 	public static final String URL_LISTAR_PROGRESSO_POR_MISSAO = "listarmissao";
-
+	public static final String URL_ATUALIZAR_PROGRESSO = "atualizarprogresso";
 	@Autowired
 	MissaoProgressoServico missaoProgressoServico;
 	@Autowired
@@ -74,6 +74,10 @@ public class MissaoProgressoRecurso extends WebService {
 
 	public static String getUrlListarProgressoPorMissao() {
 		return getUrlHome() + "/" + URL_LISTAR_PROGRESSO_POR_MISSAO;
+	}
+
+	public static String getUrlAtualizarProgresso() {
+		return getUrlHome() + "/" + URL_ATUALIZAR_PROGRESSO;
 	}
 
 	public MissaoProgressoRecurso(UsuarioServico usuarioServ, MissaoProgressoServico missaoProgressoServico,
@@ -198,6 +202,24 @@ public class MissaoProgressoRecurso extends WebService {
 		List<MissaoProgresso> mp = null;
 		try {
 			mp = missaoProgressoServico.listarMissaoProgresso(missao);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+		}
+
+		return mp;
+	}
+
+	@RequestMapping(method = RequestMethod.PATCH, value = URL_ATUALIZAR_PROGRESSO)
+	public MissaoProgresso listarMissaoProgresso(@RequestParam(value = "missao", defaultValue = "") Missao missao,
+			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa,
+			@RequestParam(value = "isituacao", defaultValue = "") int idSituacao) {
+		Usuario usuario = getUsuario(URL_LISTAR_PROGRESSO_POR_MISSAO);
+		MissaoProgresso mp = null;
+		try {
+			Pessoa giver = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
+			PessoaFisica taker = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuarioPessoa.getIdUsuario());
+			mp = missaoProgressoServico.atualizarMissaoProgresso(missao, giver, taker, idSituacao);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
