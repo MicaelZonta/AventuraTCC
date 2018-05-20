@@ -207,7 +207,6 @@ public class MissaoTest {
 		List<Missao> missoes = missaoServico.listarMissao(pessoa, missao);
 
 		assertNotNull(missoes);
-
 		assertTrue((missoes.size() > 0));
 
 	}

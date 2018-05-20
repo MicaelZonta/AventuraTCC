@@ -144,7 +144,7 @@ public class MissaoProgressoTest {
 		// Busca missão
 		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
 		assertNotNull(missao);
-
+		
 		MissaoProgresso mp = missaoProgressoServico.cancelarMissao(missao, taker, giver);
 		assertNotNull(mp);
 		assertTrue(mp.getSituacao().getIdSituacao() == SituacaoEnum.CANCELADO.getItem());

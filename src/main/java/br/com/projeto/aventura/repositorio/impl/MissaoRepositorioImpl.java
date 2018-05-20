@@ -65,7 +65,7 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 		}
 		
 
-		Query query = getSession().createNativeQuery(sb.toString() );
+		Query query = getSession().createNativeQuery(sb.toString() ,Missao.class);
 		//query.setParameter("latitude", pessoa.getAventureiro().getPosicao().getLatitude() );
 		//query.setParameter("longitude", pessoa.getAventureiro().getPosicao().getLongitude() );
 
