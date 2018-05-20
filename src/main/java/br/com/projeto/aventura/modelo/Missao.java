@@ -37,8 +37,8 @@ public class Missao implements Serializable {
 	@Column(name = "dataTermino", unique = false, nullable = false)
 	private Date dataTermino;
 
-	@Column(name = "maxAventureiro", unique = false, nullable = false)
-	private Integer maxAventureiro;
+	@Column(name = "maxAventureiros", unique = false, nullable = false)
+	private Integer maxAventureiros;
 
 	@Column(name = "idPessoa", unique = false, nullable = false)
 	private Long idPessoa;
@@ -98,12 +98,12 @@ public class Missao implements Serializable {
 		this.dataTermino = dataTermino;
 	}
 
-	public Integer getMaxAventureiro() {
-		return maxAventureiro;
+	public Integer getMaxAventureiros() {
+		return maxAventureiros;
 	}
 
-	public void setMaxAventureiro(Integer maxAventureiro) {
-		this.maxAventureiro = maxAventureiro;
+	public void setMaxAventureiros(Integer maxAventureiros) {
+		this.maxAventureiros = maxAventureiros;
 	}
 
 	public Long getIdPessoa() {

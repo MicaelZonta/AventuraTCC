@@ -52,7 +52,7 @@ public class App {
         
         missao.setLongitude(50d);
         
-        missao.setMaxAventureiro(2);
+        missao.setMaxAventureiros(2);
         
         missao.setNome("Missão Impossível");
         

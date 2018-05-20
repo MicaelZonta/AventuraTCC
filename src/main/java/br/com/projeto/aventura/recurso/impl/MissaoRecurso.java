@@ -68,7 +68,7 @@ public class MissaoRecurso extends WebService {
 		try {
 			Pessoa pessoa = pessoaServico.encontrarPessoa(usuario.getIdUsuario());
 			missao.setIdPessoa(pessoa.getIdPessoa());
-			missao = missaoServico.cadastrarMissao(missao);
+			missao = missaoServico.cadastrarMissao(missao, usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);

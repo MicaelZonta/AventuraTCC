@@ -78,7 +78,6 @@ INSERT INTO
 Missao ( nome, descricao , dataCriacao , maxAventureiros, idPessoa,longitude, latitude)
 VALUES ('Matar Hitler', 'mate o hitler' , '2017-10-10', 1, 3,50,50);
 
-SELECT * from situacao
 ## Pessoa Fisica
 INSERT INTO 
 pessoa_fisica ( idPessoa, nome, sobrenome, dataNascimento,CPF)

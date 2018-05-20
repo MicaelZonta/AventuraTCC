@@ -138,7 +138,7 @@ CREATE TABLE Missao_Progresso(
 
 ## Missao_Tarefa
 CREATE TABLE Missao_Tarefa(
-    idMissaoTarefa bigint NOT NULL,
+    idMissaoTarefa bigint NOT NULL AUTO_INCREMENT,
     idMissao bigint NOT NULL,
     nome varchar(20) NOT NULL,
     descricao varchar(100) NOT NULL,

@@ -12,24 +12,38 @@ import br.com.projeto.aventura.modelo.MissaoDificuldade;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.MissaoTarefa;
 import br.com.projeto.aventura.modelo.PessoaFisica;
+import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.repositorio.MissaoRepositorio;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;
 import br.com.projeto.aventura.servico.MissaoServico;
+import br.com.projeto.aventura.servico.UsuarioServico;
 
 @Service("missaoServico")
 public class MissaoServicoImpl implements MissaoServico {
 
-	private MissaoRepositorio missaoRepositorio;
-	private MissaoProgressoServico progressoServico;
-
 	@Autowired
-	public MissaoServicoImpl(MissaoRepositorio missaoRepositorio, MissaoProgressoServico progressoServico) {
+	private MissaoRepositorio missaoRepositorio;
+	@Autowired
+	private MissaoProgressoServico progressoServico;
+	@Autowired
+	private UsuarioServico usuarioServico;
+
+	public MissaoServicoImpl(MissaoRepositorio missaoRepositorio, MissaoProgressoServico progressoServico,
+			UsuarioServico usuarioServico) {
 		this.missaoRepositorio = missaoRepositorio;
 		this.progressoServico = progressoServico;
+		this.usuarioServico = usuarioServico;
 	}
 
 	@Override
-	public Missao cadastrarMissao(Missao missao) throws Exception {
+	public Missao cadastrarMissao(Missao missao, Usuario usuario) throws Exception {
+
+		if (usuario.getFavor() > 0) {
+			usuario.setFavor((usuario.getFavor() - 1));
+		} else {
+			throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+		}
+
 		List<MissaoTarefa> tarefaList = missao.getListaTarefas();
 		List<MissaoDificuldade> dificuldadeList = missao.getListaDificuldades();
 
@@ -38,6 +52,7 @@ public class MissaoServicoImpl implements MissaoServico {
 
 		try {
 			missao = missaoRepositorio.cadastrarMissao(missao);
+			usuario = usuarioServico.editarUsuario(usuario);
 			if (missao == null) {
 				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
 			}

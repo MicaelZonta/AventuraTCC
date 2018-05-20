@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.PessoaFisica;
+import br.com.projeto.aventura.modelo.Usuario;
 
 public interface MissaoServico {
 
-	public Missao cadastrarMissao(Missao missao) throws Exception;
+	public Missao cadastrarMissao(Missao missao,Usuario usuario) throws Exception;
 
 	public Missao editarMissao(Missao missao) throws Exception;
 
