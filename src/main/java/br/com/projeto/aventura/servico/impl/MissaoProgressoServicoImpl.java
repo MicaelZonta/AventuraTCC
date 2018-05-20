@@ -1,6 +1,5 @@
 package br.com.projeto.aventura.servico.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +12,25 @@ import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.MissaoTarefa;
 import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.modelo.Situacao;
+import br.com.projeto.aventura.modelo.SituacaoEnum;
 import br.com.projeto.aventura.modelo.TarefaProgresso;
 import br.com.projeto.aventura.modelo.TarefaProgressoChave;
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.repositorio.MissaoProgressoRepositorio;
+import br.com.projeto.aventura.repositorio.impl.TarefaProgressoRepositorioImpl;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;
 
 @Service("missaoProgressoServico")
 public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 
 	private MissaoProgressoRepositorio progressoRepositorio;
+	private TarefaProgressoRepositorioImpl tarefaRepositorio;
 
 	@Autowired
-	public MissaoProgressoServicoImpl(MissaoProgressoRepositorio progressoRepositorio) {
+	public MissaoProgressoServicoImpl(MissaoProgressoRepositorio progressoRepositorio,
+			TarefaProgressoRepositorioImpl tarefaRepositorio) {
 		this.progressoRepositorio = progressoRepositorio;
+		this.tarefaRepositorio = tarefaRepositorio;
 	}
 
 	@Override
@@ -36,25 +40,24 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 			progresso = new MissaoProgresso();
 			progresso.setIdMissao(missao.getIdMissao());
 			progresso.setIdPessoa(pessoaFisica.getIdPessoa());
-			progresso.setIdSituacao(Situacao.INICIADO);
+			progresso.setSituacao(encontrarSituacao(SituacaoEnum.INICIADO));
 
 			progressoRepositorio.cadastrarMissaoProgresso(progresso);
 
-			List<TarefaProgresso> tarefas = new ArrayList<TarefaProgresso>();
-
 			for (MissaoTarefa tarefa : missao.getListaTarefas()) {
+
 				TarefaProgresso tarefaProg = new TarefaProgresso();
 				TarefaProgressoChave tarefaChave = new TarefaProgressoChave();
+
 				tarefaChave.setIdMissaoProgresso(progresso.getIdMissaoProgresso());
 				tarefaChave.setIdMissaoTarefa(tarefa.getIdMissaoTarefa());
-				tarefaProg.setIdSituacao(Situacao.INICIADO);
-				tarefaProg.setIdTarefa(tarefa.getIdMissaoTarefa());
-				tarefas.add(tarefaProg);
+
+				tarefaProg.setTarefaProgressoChave(tarefaChave);
+				tarefaProg.setSituacao(encontrarSituacao(SituacaoEnum.INICIADO));
+
+				tarefaRepositorio.cadastrarTarefaProgresso(tarefaProg);
 			}
-
-			progresso.setTarefas(tarefas);
-
-			progressoRepositorio.atualizarMissaoProgresso(progresso);
+			progresso = buscarMissaoProgresso(missao, pessoaFisica);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,8 +72,9 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 	private MissaoProgresso buscarMissaoProgressoDisponivel(Missao missao, PessoaFisica pessoaFisica) {
 		try {
 			MissaoProgresso mp = buscarMissaoProgresso(missao, pessoaFisica);
-			if (mp.getIdSituacao() == Situacao.CANCELADO || mp.getIdSituacao() == Situacao.DESISTENCIA
-					|| mp.getIdSituacao() == Situacao.PAUSA) {
+			if (mp.getSituacao().getIdSituacao() == SituacaoEnum.CANCELADO.getItem()
+					|| mp.getSituacao().getIdSituacao() == SituacaoEnum.DESISTENCIA.getItem()
+					|| mp.getSituacao().getIdSituacao() == SituacaoEnum.PAUSA.getItem()) {
 				return null;
 			} else {
 				return mp;
@@ -91,10 +95,10 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 				throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
 			}
 
-			progresso.setIdSituacao(Situacao.CANCELADO);
+			progresso.setSituacao(encontrarSituacao(SituacaoEnum.CANCELADO));
 
 			for (TarefaProgresso tarefa : progresso.getTarefas()) {
-				tarefa.setIdSituacao(Situacao.CANCELADO);
+				tarefa.setSituacao(encontrarSituacao(SituacaoEnum.CANCELADO));
 			}
 
 			progressoRepositorio.atualizarMissaoProgresso(progresso);
@@ -114,20 +118,20 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 		MissaoProgresso progresso = null;
 		try {
 			progresso = buscarMissaoProgressoDisponivel(missao, pessoaFisica);
-			tarefa.setIdSituacao(Situacao.COMPLETA);
+			tarefa.setSituacao(encontrarSituacao(SituacaoEnum.COMPLETA));
 
 			boolean todasTarefasCompletas = true;
 
 			for (TarefaProgresso task : progresso.getTarefas()) {
-				if (task.getIdSituacao() != Situacao.COMPLETA) {
+				if (task.getSituacao().getIdSituacao() != SituacaoEnum.COMPLETA.getItem()) {
 					todasTarefasCompletas = false;
 				}
 			}
 
 			if (todasTarefasCompletas) {
-				progresso.setIdSituacao(Situacao.COMPLETA);
+				progresso.setSituacao(encontrarSituacao(SituacaoEnum.COMPLETA));
 			}
-			
+
 			progresso = progressoRepositorio.atualizarMissaoProgresso(progresso);
 
 		} catch (Exception e) {
@@ -146,7 +150,7 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 		try {
 
 			progresso = buscarMissaoProgressoDisponivel(missao, pessoaFisica);
-			progresso.setIdSituacao(Situacao.PAUSA);
+			progresso.setSituacao(encontrarSituacao(SituacaoEnum.PAUSA));
 			progressoRepositorio.atualizarMissaoProgresso(progresso);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -163,7 +167,7 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 	public MissaoProgresso buscarMissaoProgresso(Missao missao, PessoaFisica pessoaFisica) throws Exception {
 		MissaoProgresso progresso = null;
 		try {
-			progresso = buscarMissaoProgresso(missao, pessoaFisica);
+			progresso = progressoRepositorio.buscarMissaoProgresso(missao, pessoaFisica);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -204,6 +208,22 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
 		}
 		return progressosList;
+	}
+
+	@Override
+	public Situacao encontrarSituacao(SituacaoEnum situacaoEnum) throws Exception {
+		Situacao situacao = null;
+		try {
+			int idSituacao = situacaoEnum.getItem();
+			situacao = progressoRepositorio.encontrarSituacao(idSituacao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (situacao == null) {
+			throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
+		}
+		return situacao;
 	}
 
 }

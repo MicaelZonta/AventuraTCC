@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.PessoaFisica;
+import br.com.projeto.aventura.modelo.Situacao;
 import br.com.projeto.aventura.repositorio.MissaoProgressoRepositorio;
 
 @Repository("missaoProgressoRepositorio")
@@ -30,7 +31,7 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 
 	@Override
 	public MissaoProgresso atualizarMissaoProgresso(MissaoProgresso missaoProgresso) throws Exception {
-		missaoProgresso = atualizar(missaoProgresso.getIdMissao(), missaoProgresso);
+		missaoProgresso = atualizar(missaoProgresso.getIdMissaoProgresso(), missaoProgresso);
 		return missaoProgresso;
 	}
 
@@ -47,11 +48,15 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 		sb.append("INNER JOIN usuario_pessoa up ");
 		sb.append("WHERE mp.idMissao = :idMissao AND up.idPessoa = :idPessoa ");
 
-		Query query = getSession().createNativeQuery(sb.toString());
-		query.setParameter("idMissao", missao.getIdMissao());
+		
+		Query query = getSession().createNativeQuery(sb.toString(),MissaoProgresso.class);
+		query.setMaxResults(1);
 		query.setParameter("idPessoa", pessoaFisica.getIdPessoa());
+		query.setParameter("idMissao", missao.getIdMissao());
 
 		MissaoProgresso mp = (MissaoProgresso) query.getSingleResult();
+		
+		System.out.println("PESSSSSSSSOAAA" + mp.getIdPessoa());
 		closeSession();
 		return mp;
 	}
@@ -83,6 +88,19 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 		List<MissaoProgresso> mp = query.getResultList();
 		closeSession();
 		return mp;
+	}
+
+	@Override
+	public Situacao encontrarSituacao(int idSituacao) throws Exception {
+		openSession();
+		StringBuilder sb = new StringBuilder("SELECT s FROM Situacao s WHERE idSituacao = :idSituacao ");
+		Query query = getSession().createQuery(sb.toString(), Situacao.class);
+		query.setMaxResults(1);
+		query.setParameter("idSituacao", idSituacao);
+
+		Situacao situacao = (Situacao) query.getSingleResult();
+		closeSession();
+		return situacao;
 	}
 
 }

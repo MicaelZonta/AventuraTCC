@@ -55,7 +55,7 @@ public class Missao implements Serializable {
 	@OneToMany(mappedBy = "idMissao", targetEntity = MissaoProgresso.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<MissaoProgresso> listaProgressos;
 
-	@OneToMany(mappedBy = "idMissao", targetEntity = MissaoTarefa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idMissao", targetEntity = MissaoTarefa.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	List<MissaoTarefa> listaTarefas;
 
 	public Long getIdMissao() {

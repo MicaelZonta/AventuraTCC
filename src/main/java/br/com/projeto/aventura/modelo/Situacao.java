@@ -1,20 +1,47 @@
 package br.com.projeto.aventura.modelo;
 
-public enum Situacao {
-	INICIADO(1), PAUSA(2), COMPLETA(3), ESPERA(4), CANCELADO(5), DESISTENCIA(6);
+import java.io.Serializable;
 
-	private Integer item;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-	private Situacao(int item) {
-		this.item = item;
+@Entity(name = "Situacao")
+public class Situacao implements Serializable {
+
+	private static final long serialVersionUID = 4567960800237213451L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idSituacao;
+
+	@Column(name = "nome", nullable = false, length = 20)
+	String nome;
+
+	public Situacao() {
+		
+	}
+	
+	public Integer getIdSituacao() {
+		return idSituacao;
 	}
 
-	public Integer getItem() {
-		return item;
+	public void setIdSituacao(Integer idSituacao) {
+		this.idSituacao = idSituacao;
 	}
 
-	public void setItem(Integer item) {
-		this.item = item;
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

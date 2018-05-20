@@ -1,4 +1,4 @@
-package br.com.projeto.aventura.recurso;
+package br.com.projeto.aventura.servico;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,6 +23,7 @@ import br.com.projeto.aventura.repositorio.impl.MissaoProgressoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.MissaoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.PessoaFisicaRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.PessoaRepositorioImpl;
+import br.com.projeto.aventura.repositorio.impl.TarefaProgressoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
 import br.com.projeto.aventura.servico.MissaoServico;
 import br.com.projeto.aventura.servico.PessoaFisicaServico;
@@ -34,15 +35,15 @@ import br.com.projeto.aventura.servico.impl.PessoaFisicaServicoImpl;
 import br.com.projeto.aventura.servico.impl.PessoaServicoImpl;
 import br.com.projeto.aventura.servico.impl.UsuarioServicoImpl;
 
-public class MissaoRecursoTest {
+public class MissaoTest {
 
 	MissaoServico missaoServico;
 	PessoaServico pessoaServico;
 	UsuarioServico usuarioServico;
 	PessoaFisicaServico pessoaFisicaServico;
 
-	public MissaoRecursoTest() {
-		MissaoProgressoServicoImpl mpSer = new MissaoProgressoServicoImpl(new MissaoProgressoRepositorioImpl());
+	public MissaoTest() {
+		MissaoProgressoServicoImpl mpSer = new MissaoProgressoServicoImpl(new MissaoProgressoRepositorioImpl(), new TarefaProgressoRepositorioImpl());
 		UsuarioServicoImpl usuarioSer = new UsuarioServicoImpl(new UsuarioRepositorioImpl());
 
 		missaoServico = new MissaoServicoImpl(new MissaoRepositorioImpl(), mpSer, usuarioSer);

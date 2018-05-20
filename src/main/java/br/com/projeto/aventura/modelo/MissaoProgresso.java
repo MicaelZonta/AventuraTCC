@@ -6,13 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity(name = "Missao_Progresso")
 public class MissaoProgresso implements Serializable {
@@ -32,10 +32,11 @@ public class MissaoProgresso implements Serializable {
 	@OneToMany(mappedBy = "idAvaliacao.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 
-	@Enumerated(EnumType.ORDINAL)
-	private Situacao idSituacao;
+	@OneToOne
+	@JoinColumn(name = "idSituacao")
+	private Situacao situacao;
 
-	@OneToMany(mappedBy = "idAvaliacao.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "tarefaProgressoChave.idMissaoProgresso", targetEntity = TarefaProgresso.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TarefaProgresso> tarefas;
 
 	public Long getIdMissaoProgresso() {
@@ -70,12 +71,12 @@ public class MissaoProgresso implements Serializable {
 		this.avaliacoes = avaliacoes;
 	}
 
-	public Situacao getIdSituacao() {
-		return idSituacao;
+	public Situacao getSituacao() {
+		return situacao;
 	}
 
-	public void setIdSituacao(Situacao idSituacao) {
-		this.idSituacao = idSituacao;
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
 	}
 
 	public List<TarefaProgresso> getTarefas() {

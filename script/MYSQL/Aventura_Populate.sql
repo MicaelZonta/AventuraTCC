@@ -123,4 +123,14 @@ VALUES ( 'DESISTENCIA' );
 ## Missao Progresso
 INSERT INTO 
 missao_progresso ( idMissao , idPessoa, idSituacao )
-VALUES ( 3, 3, 1 )
+VALUES ( 3, 3, 1 );
+
+## MissaoTarefa
+INSERT INTO
+missao_tarefa (idMissao, nome, descricao)
+VALUES (3,'teste','teste');
+
+## Tarefa Progresso
+INSERT INTO 
+Tarefa_Progresso (idSituacao, idMissaoProgresso, idMissaoTarefa) 
+VALUES (1, 1, 1)
