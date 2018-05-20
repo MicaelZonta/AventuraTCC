@@ -1,5 +1,7 @@
 package br.com.projeto.aventura.recurso.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 import br.com.projeto.aventura.modelo.Missao;
+import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
 import br.com.projeto.aventura.recurso.RoleEnum;
 import br.com.projeto.aventura.recurso.WebService;
 import br.com.projeto.aventura.recurso.WebServiceValidador;
 import br.com.projeto.aventura.servico.MissaoServico;
+import br.com.projeto.aventura.servico.PessoaFisicaServico;
 import br.com.projeto.aventura.servico.PessoaServico;
 import br.com.projeto.aventura.servico.UsuarioServico;
 
@@ -27,11 +31,14 @@ public class MissaoRecurso extends WebService {
 	public static final String URL_EDITAR = "editar";
 	public static final String URL_DELETAR = "deletar";
 	public static final String URL_ENCONTRAR = "encontrar";
+	public static final String URL_LISTAR = "listar";
 
 	@Autowired
 	MissaoServico missaoServico;
 	@Autowired
 	PessoaServico pessoaServico;
+	@Autowired
+	PessoaFisicaServico pessoaFisicaServico;
 
 	public static String getUrlHome() {
 		return "/" + URL_HOME;
@@ -49,16 +56,27 @@ public class MissaoRecurso extends WebService {
 		return getUrlHome() + "/" + URL_ENCONTRAR;
 	}
 
-	public MissaoRecurso(UsuarioServico usuarioServ, MissaoServico missaoServico, PessoaServico pessoaServico) {
+	public static String getUrlDeletar() {
+		return getUrlHome() + "/" + URL_DELETAR;
+	}
+
+	public static String getUrlListar() {
+		return getUrlHome() + "/" + URL_LISTAR;
+	}
+
+	public MissaoRecurso(UsuarioServico usuarioServ, MissaoServico missaoServico, PessoaServico pessoaServico,
+			PessoaFisicaServico pessoaFisicaServico) {
 		super(usuarioServ);
 		this.missaoServico = missaoServico;
 		this.pessoaServico = pessoaServico;
+		this.pessoaFisicaServico = pessoaFisicaServico;
 		WebServiceValidador validadorBasico = new WebServiceValidador();
 		validadorBasico.addAutorizacao(RoleEnum.USER);
 		adicionarValidador(URL_CADASTRAR, validadorBasico);
 		adicionarValidador(URL_EDITAR, validadorBasico);
 		adicionarValidador(URL_DELETAR, validadorBasico);
 		adicionarValidador(URL_ENCONTRAR, validadorBasico);
+		adicionarValidador(URL_LISTAR, validadorBasico);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
@@ -148,7 +166,7 @@ public class MissaoRecurso extends WebService {
 
 	@SuppressWarnings("unused")
 	@RequestMapping(method = RequestMethod.GET, value = URL_ENCONTRAR)
-	public Missao encontrarPessoaFisica(@RequestParam(value = "idMissao", defaultValue = "") Long idMissao) {
+	public Missao encontrarMissao(@RequestParam(value = "idMissao", defaultValue = "") Long idMissao) {
 		Usuario usuario = getUsuario(URL_ENCONTRAR);
 		Missao missaoOg = null;
 		try {
@@ -158,6 +176,21 @@ public class MissaoRecurso extends WebService {
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
 		return missaoOg;
+	}
+
+	@SuppressWarnings("unused")
+	@RequestMapping(method = RequestMethod.GET, value = URL_LISTAR)
+	public List<Missao> listarMissoes(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+		Usuario usuario = getUsuario(URL_ENCONTRAR);
+		List<Missao> missoes = null;
+		try {
+			PessoaFisica pessoa = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+			missoes = missaoServico.listarMissao(pessoa, missao);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+		}
+		return missoes;
 	}
 
 }

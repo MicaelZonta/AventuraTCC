@@ -16,5 +16,5 @@ public interface MissaoServico {
 	
 	public Missao encontrarMissao(long idMissao) throws Exception;
 
-	public List<Missao> listarMissao(PessoaFisica usuario, Missao missao) throws Exception;
+	public List<Missao> listarMissao(PessoaFisica pessoaFisica, Missao missao) throws Exception;
 }

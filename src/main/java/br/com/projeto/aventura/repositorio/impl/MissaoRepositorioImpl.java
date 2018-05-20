@@ -49,7 +49,8 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 				"WHERE m.maxAventureiros > (SELECT count(mp.idMissaoProgresso) FROM missao_progresso mp WHERE mp.idMissao = m.idMissao) ");
 		sb.append("AND m.dataTermino IS NULL ");
 		sb.append("AND u.ativo = true ");
-		sb.append("AND 1000 >= aventura_db.getDistancia(m.latitude,m.longitude,:latitude,:longitude) ");
+		//sb.append("AND 1000 >= aventura_db.getDistancia(m.latitude,m.longitude,:latitude,:longitude) ");
+		
 		
 		if (missao.getNome() != null && !missao.getNome().isEmpty()) {
 			sb.append("AND m.nome LIKE :nome ");
@@ -65,11 +66,20 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 		
 
 		Query query = getSession().createNativeQuery(sb.toString() );
-		query.setParameter("latitude", pessoa.getAventureiro().getPosicao().getLatitude() );
-		query.setParameter("longitude", pessoa.getAventureiro().getPosicao().getLongitude() );
-		query.setParameter("nome", missao.getNome() );
-		query.setParameter("descricao", missao.getDescricao() );
-		query.setParameter("data", missao.getDataCriacao() );
+		//query.setParameter("latitude", pessoa.getAventureiro().getPosicao().getLatitude() );
+		//query.setParameter("longitude", pessoa.getAventureiro().getPosicao().getLongitude() );
+
+		if (missao.getNome() != null && !missao.getNome().isEmpty()) {
+			query.setParameter("nome", "%"+missao.getNome()+"%" );
+		}
+		
+		if(missao.getDescricao() != null &&  !missao.getDescricao().isEmpty()) {
+			query.setParameter("descricao", "%"+missao.getDescricao()+"%" );
+		}
+		
+		if(missao.getDataCriacao() != null) {
+			query.setParameter("data", missao.getDataCriacao() );
+		}
 
 		List<Missao> missaoList = query.getResultList();
 		closeSession();

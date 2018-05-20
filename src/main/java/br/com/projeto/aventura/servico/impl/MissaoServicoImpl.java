@@ -96,7 +96,7 @@ public class MissaoServicoImpl implements MissaoServico {
 	public Missao deletarMissao(Missao missao) throws Exception {
 		try {
 			List<MissaoProgresso> progressos = progressoServico.listarMissaoProgresso(missao);
-			if (progressos.size() == 0) {
+			if (progressos !=null && progressos.size() == 0) {
 				missao = missaoRepositorio.deletarMissao(missao);
 				if (missao == null) {
 					throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
