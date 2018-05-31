@@ -17,7 +17,7 @@ import br.com.projeto.aventura.modelo.Posicao;
 
 @Entity(name = "Unidade")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Unidade implements Serializable {
+public class Unidade implements Serializable {
 
 	private static final long serialVersionUID = 6358504224612539869L;
 

@@ -40,4 +40,9 @@ public class PessoaFisicaRepositorioImpl extends RepositorioImpl<PessoaFisica> i
 		return pessoaFisica;
 	}
 
+	@Override
+	public PessoaFisica encontrarPessoaFisica(long idPessoaFissica) throws Exception {
+		return buscaPorId(idPessoaFissica);
+	}
+
 }

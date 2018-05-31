@@ -103,4 +103,9 @@ public class MissaoProgressoRepositorioImpl extends RepositorioImpl<MissaoProgre
 		return situacao;
 	}
 
+	@Override
+	public MissaoProgresso encontrarMissaoProgresso(long idMissaoProgresso) throws Exception {
+		return buscaPorId(idMissaoProgresso);
+	}
+
 }

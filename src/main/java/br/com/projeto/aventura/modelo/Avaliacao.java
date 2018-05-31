@@ -12,7 +12,7 @@ public class Avaliacao implements Serializable {
 	private static final long serialVersionUID = 5278827789832873873L;
 
 	@EmbeddedId
-	AvaliacaoChave idAvaliacao;
+	AvaliacaoChave avaliacaoChave;
 
 	@Column(name = "estrelas", unique = false, nullable = false)
 	private Integer estrelas;
@@ -20,12 +20,12 @@ public class Avaliacao implements Serializable {
 	@Column(name = "descricao", unique = false, nullable = false, length = 50)
 	private String descricao;
 
-	public AvaliacaoChave getIdAvaliacao() {
-		return idAvaliacao;
+	public AvaliacaoChave getAvaliacaoChave() {
+		return avaliacaoChave;
 	}
 
-	public void setIdAvaliacao(AvaliacaoChave idAvaliacao) {
-		this.idAvaliacao = idAvaliacao;
+	public void setAvaliacaoChave(AvaliacaoChave avaliacaoChave) {
+		this.avaliacaoChave = avaliacaoChave;
 	}
 
 	public Integer getEstrelas() {

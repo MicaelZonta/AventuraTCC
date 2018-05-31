@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,9 +24,6 @@ public class MissaoDificuldade implements Serializable {
 	@Column(name = "idMissao", unique = false, nullable = false)
 	private Long idMissao;
 
-	@Embedded
-	private Nivel nivel;
-
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idHabilidade")
 	private Habilidade habilidade;
@@ -46,14 +42,6 @@ public class MissaoDificuldade implements Serializable {
 
 	public void setIdMissao(Long idMissao) {
 		this.idMissao = idMissao;
-	}
-
-	public Nivel getNivel() {
-		return nivel;
-	}
-
-	public void setNivel(Nivel nivel) {
-		this.nivel = nivel;
 	}
 
 	public Habilidade getHabilidade() {

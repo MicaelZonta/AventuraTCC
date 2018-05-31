@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -49,36 +50,37 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 				"WHERE m.maxAventureiros > (SELECT count(mp.idMissaoProgresso) FROM missao_progresso mp WHERE mp.idMissao = m.idMissao) ");
 		sb.append("AND m.dataTermino IS NULL ");
 		sb.append("AND u.ativo = true ");
-		//sb.append("AND 1000 >= aventura_db.getDistancia(m.latitude,m.longitude,:latitude,:longitude) ");
-		
-		
+		// sb.append("AND 1000 >=
+		// aventura_db.getDistancia(m.latitude,m.longitude,:latitude,:longitude) ");
+
 		if (missao.getNome() != null && !missao.getNome().isEmpty()) {
 			sb.append("AND m.nome LIKE :nome ");
 		}
-		
-		if(missao.getDescricao() != null &&  !missao.getDescricao().isEmpty()) {
+
+		if (missao.getDescricao() != null && !missao.getDescricao().isEmpty()) {
 			sb.append("AND m.descricao LIKE :descricao ");
 		}
-		
-		if(missao.getDataCriacao() != null) {
+
+		if (missao.getDataCriacao() != null) {
 			sb.append("AND m.dataCriacao >= :data ");
 		}
-		
 
-		Query query = getSession().createNativeQuery(sb.toString() ,Missao.class);
-		//query.setParameter("latitude", pessoa.getAventureiro().getPosicao().getLatitude() );
-		//query.setParameter("longitude", pessoa.getAventureiro().getPosicao().getLongitude() );
+		Query query = getSession().createNativeQuery(sb.toString(), Missao.class);
+		// query.setParameter("latitude",
+		// pessoa.getAventureiro().getPosicao().getLatitude() );
+		// query.setParameter("longitude",
+		// pessoa.getAventureiro().getPosicao().getLongitude() );
 
 		if (missao.getNome() != null && !missao.getNome().isEmpty()) {
-			query.setParameter("nome", "%"+missao.getNome()+"%" );
+			query.setParameter("nome", "%" + missao.getNome() + "%");
 		}
-		
-		if(missao.getDescricao() != null &&  !missao.getDescricao().isEmpty()) {
-			query.setParameter("descricao", "%"+missao.getDescricao()+"%" );
+
+		if (missao.getDescricao() != null && !missao.getDescricao().isEmpty()) {
+			query.setParameter("descricao", "%" + missao.getDescricao() + "%");
 		}
-		
-		if(missao.getDataCriacao() != null) {
-			query.setParameter("data", missao.getDataCriacao() );
+
+		if (missao.getDataCriacao() != null) {
+			query.setParameter("data", missao.getDataCriacao());
 		}
 
 		List<Missao> missaoList = query.getResultList();
@@ -89,6 +91,13 @@ public class MissaoRepositorioImpl extends RepositorioImpl<Missao> implements Mi
 	@Override
 	public Missao encontrarMissao(Long idMissao) throws Exception {
 		Missao missao = buscaPorId(idMissao);
+		if (missao != null) {
+			openSession();
+			getSession().update(missao);
+			Hibernate.initialize(missao.getListaDificuldades());
+			Hibernate.initialize(missao.getListaTarefas());
+			closeSession();
+		}
 		return missao;
 	}
 

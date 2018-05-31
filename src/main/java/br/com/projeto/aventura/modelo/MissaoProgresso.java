@@ -29,7 +29,7 @@ public class MissaoProgresso implements Serializable {
 	@Column(name = "idPessoa", unique = false, nullable = false)
 	private Long idPessoa;
 
-	@OneToMany(mappedBy = "idAvaliacao.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "avaliacaoChave.idMissaoProgresso", targetEntity = Avaliacao.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 
 	@OneToOne

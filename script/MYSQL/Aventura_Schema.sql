@@ -52,7 +52,7 @@ CREATE TABLE Celular (
 ## DDD
 CREATE TABLE DDD (
     idDDD bigint NOT NULL AUTO_INCREMENT,
-    numero char(3) NOT NULL,
+    numero char(3) NOT NULL UNIQUE,
     primary key(idDDD)
 );
 
@@ -62,14 +62,14 @@ CREATE TABLE Pessoa_Fisica (
     nome varchar(20) NOT NULL,
     sobrenome varchar(60) NOT NULL,
     dataNascimento date NOT NULL,
-    CPF char(11) NOT NULL,    
+    CPF char(11) NOT NULL UNIQUE,    
     primary key(idPessoa)
 );
 
 ## Aventureiro
 CREATE TABLE Aventureiro (
 	idUnidade bigint NOT NULL,
-    idPessoa bigint NOT NULL,
+    idPessoa bigint NOT NULL UNIQUE,
     primary key(idUnidade)
 );
 
@@ -82,8 +82,8 @@ CREATE TABLE Unidade(
 ## Posicao
 CREATE TABLE Posicao(
     idUnidade bigint NOT NULL,
-    latitude bigint NOT NULL,
-    longitude bigint NOT NULL,
+    latitude double NOT NULL,
+    longitude double NOT NULL,
     primary key(idUnidade)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE Avaliacao(
 
 ## Habilidade
 CREATE TABLE Habilidade(
-    idHabilidade bigint NOT NULL,
+    idHabilidade bigint NOT NULL AUTO_INCREMENT,
     nome varchar(25) NOT NULL,
     primary key(idHabilidade)
 );
@@ -119,15 +119,13 @@ CREATE TABLE Missao(
 
 ## Missao_Dificuldade
 CREATE TABLE Missao_Dificuldade(
-    idMissaoDificuldade bigint NOT NULL,
+    idMissaoDificuldade bigint NOT NULL AUTO_INCREMENT,
     idMissao bigint NOT NULL,
-    level int NOT NULL,
-    experiencia int NOT NULL,
     idHabilidade bigint NOT NULL,
     primary key(idMissaoDificuldade)
 );
 
-## Missao_Dificuldade
+## Missao_Progresso
 CREATE TABLE Missao_Progresso(
     idMissaoProgresso bigint NOT NULL AUTO_INCREMENT,
     idMissao bigint NOT NULL,
@@ -141,14 +139,14 @@ CREATE TABLE Missao_Tarefa(
     idMissaoTarefa bigint NOT NULL AUTO_INCREMENT,
     idMissao bigint NOT NULL,
     nome varchar(20) NOT NULL,
-    descricao varchar(100) NOT NULL,
+    descricao TEXT NOT NULL,
     primary key(idMissaoTarefa)
 );
 
 ## Situacao
 CREATE TABLE Situacao(
     idSituacao int NOT NULL AUTO_INCREMENT,
-    nome varchar(20) NOT NULL,
+    nome varchar(20) NOT NULL UNIQUE,
     primary key(idSituacao)
 );
 
@@ -158,6 +156,15 @@ CREATE TABLE Tarefa_Progresso(
     idMissaoTarefa bigint NOT NULL,
     idSituacao int NOT NULL,
     primary key(idMissaoProgresso,idMissaoTarefa)
+);
+
+## Habilidade_Aventureiro
+CREATE TABLE Unidade_Habilidade(
+    idUnidade bigint NOT NULL,
+    idHabilidade bigint NOT NULL,
+    nivel bigint NOT NULL,
+    exp int NOT NULL,
+    primary key(idUnidade,idHabilidade)
 );
 
 /*
@@ -239,6 +246,13 @@ ADD FOREIGN KEY (idMissaoTarefa) REFERENCES Missao_Tarefa(idMissaoTarefa);
 ALTER TABLE Tarefa_Progresso
 ADD FOREIGN KEY (idSituacao) REFERENCES Situacao(idSituacao);
 
+
+## Unidade_Habilidade
+ALTER TABLE Unidade_Habilidade
+ADD FOREIGN KEY (idUnidade) REFERENCES Unidade(idUnidade);
+
+ALTER TABLE Unidade_Habilidade
+ADD FOREIGN KEY (idHabilidade) REFERENCES Habilidade(idHabilidade);
 /*
 	CREATE UNIQUE CONSTRAINTS
 */

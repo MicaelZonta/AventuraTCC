@@ -9,5 +9,8 @@ public interface PessoaFisicaRepositorio {
 	public PessoaFisica cadastrarPessoaFisica(PessoaFisica pessoaFisica) throws Exception;
 
 	public PessoaFisica editarPessoaFisica(PessoaFisica pessoaFisica) throws Exception;
+	
+	public PessoaFisica encontrarPessoaFisica(long idPessoaFissica) throws Exception;
+
 
 }

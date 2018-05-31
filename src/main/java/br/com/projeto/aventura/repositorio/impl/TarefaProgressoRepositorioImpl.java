@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import br.com.projeto.aventura.modelo.TarefaProgresso;
 import br.com.projeto.aventura.repositorio.MissaoTarefaProgressoRepositorio;
 
-@Repository("missaoRepositorio")
+@Repository("tarefaProgressoRepositorio")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class TarefaProgressoRepositorioImpl extends RepositorioImpl<TarefaProgresso>
 		implements MissaoTarefaProgressoRepositorio {

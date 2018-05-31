@@ -6,8 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import br.com.projeto.aventura.Util.UtilString;
+import br.com.projeto.aventura.modelo.Avaliacao;
+import br.com.projeto.aventura.modelo.Missao;
+import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.repositorio.PessoaFisicaRepositorio;
+import br.com.projeto.aventura.servico.MissaoProgressoServico;
+import br.com.projeto.aventura.servico.MissaoServico;
 import br.com.projeto.aventura.servico.PessoaFisicaServico;
 
 @Service("pessoaFisicaServico")
@@ -17,6 +22,7 @@ public class PessoaFisicaServicoImpl implements PessoaFisicaServico {
 
 	@Autowired
 	public PessoaFisicaServicoImpl(PessoaFisicaRepositorio pessoaFisicaRepositorio) {
+		super();
 		this.pessoaFisicaRepositorio = pessoaFisicaRepositorio;
 	}
 
@@ -68,4 +74,5 @@ public class PessoaFisicaServicoImpl implements PessoaFisicaServico {
 		}
 		return true;
 	}
+
 }

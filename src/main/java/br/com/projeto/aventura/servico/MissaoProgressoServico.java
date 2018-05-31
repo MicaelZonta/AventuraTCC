@@ -29,4 +29,6 @@ public interface MissaoProgressoServico {
 	public Situacao encontrarSituacao(SituacaoEnum situacaoEnum) throws Exception;
 
 	public MissaoProgresso atualizarMissaoProgresso(Missao missao, Pessoa pessoa, PessoaFisica pessoaFisica, int idSituacao) throws Exception;
+	
+	public MissaoProgresso buscarMissaoProgresso(long idMissaoProgresso) throws Exception;
 }

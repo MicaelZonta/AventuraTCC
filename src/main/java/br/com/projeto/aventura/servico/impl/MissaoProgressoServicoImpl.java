@@ -261,4 +261,15 @@ public class MissaoProgressoServicoImpl implements MissaoProgressoServico {
 		return progresso;
 	}
 
+	@Override
+	public MissaoProgresso buscarMissaoProgresso(long idMissaoProgresso) throws Exception {
+		try {
+			MissaoProgresso mp = progressoRepositorio.encontrarMissaoProgresso(idMissaoProgresso);
+			return mp;
+		} catch (Exception e) {
+		}
+		throw new HttpClientErrorException(HttpStatus.NOT_ACCEPTABLE);
+
+	}
+
 }

@@ -1,12 +1,15 @@
 package br.com.projeto.aventura.servico;
 
+import br.com.projeto.aventura.modelo.Avaliacao;
 import br.com.projeto.aventura.modelo.Aventureiro;
-import br.com.projeto.aventura.modelo.Usuario;
 
 public interface AventureiroServico {
 
-	public Usuario cadastrarAventureiro(Aventureiro aventureiro) throws Exception;
+	public Aventureiro evoluirHabilidades(Avaliacao avaliacao) throws Exception;
 
-	public Usuario editarAventureiro(Aventureiro aventureiro) throws Exception;
+	public Aventureiro encontrarAventureiroPorIdPessoa(long idPessoa) throws Exception;
 
+	public Aventureiro cadastrarAventureiro(long idPessoa, double latitude, double longitude) throws Exception;
+
+	public Aventureiro atualizarAventureiro(Aventureiro aventureiro) throws Exception;
 }

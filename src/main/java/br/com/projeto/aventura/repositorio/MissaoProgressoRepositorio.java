@@ -26,4 +26,5 @@ public interface MissaoProgressoRepositorio {
 
 	public Situacao encontrarSituacao(int idSituacao) throws Exception;
 
+	public MissaoProgresso encontrarMissaoProgresso(long idMissaoProgresso) throws Exception;
 }

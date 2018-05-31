@@ -85,15 +85,15 @@ VALUES ( 1, 'Micael','Zonta','1994-09-26','44178920839');
 
 INSERT INTO 
 pessoa_fisica ( idPessoa, nome, sobrenome, dataNascimento,CPF)
-VALUES ( 2, 'Djalma','Junior','1992-09-26','11122233344');
+VALUES ( 2, 'Djalma','Junior','1992-09-26','11122233347');
 
 INSERT INTO 
 pessoa_fisica ( idPessoa, nome, sobrenome, dataNascimento,CPF)
-VALUES ( 3, 'Rafael','Murakami','1993-10-02','11122233344');
+VALUES ( 3, 'Rafael','Murakami','1993-10-02','11122233364');
 
 INSERT INTO 
 pessoa_fisica ( idPessoa, nome, sobrenome, dataNascimento,CPF)
-VALUES ( 4, 'Natália','Borges','1996-12-31','11122233344');
+VALUES ( 4, 'Natália','Borges','1996-12-31','11122283344');
 
 ## Situacao
 INSERT INTO 
@@ -133,4 +133,13 @@ VALUES (3,'teste','teste');
 ## Tarefa Progresso
 INSERT INTO 
 Tarefa_Progresso (idSituacao, idMissaoProgresso, idMissaoTarefa) 
-VALUES (1, 1, 1)
+VALUES (1, 1, 1);
+
+## Aventureiro
+INSERT INTO Unidade() VALUES();
+INSERT INTO Aventureiro(idUnidade, idPessoa) VALUES ( 1, 2);
+
+## Habilidade
+INSERT INTO 
+Habilidade (nome) 
+VALUES ("Golf");

@@ -19,12 +19,14 @@ import br.com.projeto.aventura.modelo.SituacaoEnum;
 import br.com.projeto.aventura.modelo.TarefaProgresso;
 import br.com.projeto.aventura.modelo.Usuario;
 import br.com.projeto.aventura.modelo.abstrato.Pessoa;
+import br.com.projeto.aventura.repositorio.impl.AvaliacaoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.MissaoProgressoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.MissaoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.PessoaFisicaRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.PessoaRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.TarefaProgressoRepositorioImpl;
 import br.com.projeto.aventura.repositorio.impl.UsuarioRepositorioImpl;
+import br.com.projeto.aventura.servico.impl.AvaliacaoServicoImpl;
 import br.com.projeto.aventura.servico.impl.MissaoProgressoServicoImpl;
 import br.com.projeto.aventura.servico.impl.MissaoServicoImpl;
 import br.com.projeto.aventura.servico.impl.PessoaFisicaServicoImpl;
@@ -38,6 +40,7 @@ public class MissaoProgressoTest {
 	UsuarioServico usuarioServico;
 	PessoaFisicaServico pessoaFisicaServico;
 	MissaoProgressoServico missaoProgressoServico;
+	AvaliacaoServico avaliacaoServico;
 
 	public MissaoProgressoTest() {
 		MissaoProgressoServicoImpl mpSer = new MissaoProgressoServicoImpl(new MissaoProgressoRepositorioImpl(),
@@ -49,6 +52,7 @@ public class MissaoProgressoTest {
 		pessoaFisicaServico = new PessoaFisicaServicoImpl(new PessoaFisicaRepositorioImpl());
 		usuarioServico = usuarioSer;
 		missaoProgressoServico = mpSer;
+		avaliacaoServico = new AvaliacaoServicoImpl(new AvaliacaoRepositorioImpl(), missaoProgressoServico, missaoServico, pessoaServico, pessoaFisicaServico);
 	}
 
 	@Test
@@ -144,7 +148,7 @@ public class MissaoProgressoTest {
 		// Busca missão
 		Missao missao = missaoServico.encontrarMissao(mpFind.get(0).getIdMissao());
 		assertNotNull(missao);
-		
+
 		MissaoProgresso mp = missaoProgressoServico.cancelarMissao(missao, taker, giver);
 		assertNotNull(mp);
 		assertTrue(mp.getSituacao().getIdSituacao() == SituacaoEnum.CANCELADO.getItem());
@@ -180,6 +184,7 @@ public class MissaoProgressoTest {
 
 	}
 
+	
 	@Test
 	public void testPausarMissao() throws Exception {
 		// Busca Usuario

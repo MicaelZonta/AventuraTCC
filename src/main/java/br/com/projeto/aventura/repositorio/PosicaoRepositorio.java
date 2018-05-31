@@ -5,6 +5,7 @@ import br.com.projeto.aventura.modelo.Usuario;
 
 public interface PosicaoRepositorio {
 
-	public Usuario cadastrarPosicao(Posicao posicao) throws Exception;
+	public Posicao cadastrarPosicao(Posicao posicao) throws Exception;
 
+	public Posicao atualizarPosicao(Posicao posicao) throws Exception;
 }
