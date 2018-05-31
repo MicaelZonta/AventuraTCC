@@ -17,7 +17,6 @@ import br.com.projeto.aventura.modelo.MissaoProgresso;
 import br.com.projeto.aventura.modelo.Posicao;
 import br.com.projeto.aventura.modelo.UnidadeHabilidade;
 import br.com.projeto.aventura.modelo.UnidadeHabilidadeChave;
-import br.com.projeto.aventura.modelo.abstrato.Unidade;
 import br.com.projeto.aventura.repositorio.AventureiroRepositorio;
 import br.com.projeto.aventura.servico.AventureiroServico;
 import br.com.projeto.aventura.servico.MissaoProgressoServico;
@@ -32,8 +31,6 @@ public class AventureiroServicoImpl implements AventureiroServico {
 	private UnidadeHabilidadeServico unidadeHabilidadeServ;
 	private MissaoProgressoServico missaoProgServ;
 	private MissaoServico missaoServ;
-	private UnidadeServico unidadeServ;
-
 	@Autowired
 	public AventureiroServicoImpl(AventureiroRepositorio aventureiroRepo,
 			UnidadeHabilidadeServico unidadeHabilidadeServ, MissaoProgressoServico missaoProgServ,
@@ -41,7 +38,6 @@ public class AventureiroServicoImpl implements AventureiroServico {
 		super();
 		this.aventureiroRepo = aventureiroRepo;
 		this.unidadeHabilidadeServ = unidadeHabilidadeServ;
-		this.unidadeServ = unidadeServ;
 		this.missaoProgServ = missaoProgServ;
 		this.missaoServ = missaoServ;
 	}

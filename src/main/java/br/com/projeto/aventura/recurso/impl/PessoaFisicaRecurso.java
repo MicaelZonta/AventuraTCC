@@ -18,6 +18,7 @@ import br.com.projeto.aventura.modelo.Missao;
 import br.com.projeto.aventura.modelo.PessoaFisica;
 import br.com.projeto.aventura.modelo.UnidadeHabilidade;
 import br.com.projeto.aventura.modelo.Usuario;
+import br.com.projeto.aventura.modelo.view.Aventureiro_PessoaFisica;
 import br.com.projeto.aventura.recurso.RoleEnum;
 import br.com.projeto.aventura.recurso.WebService;
 import br.com.projeto.aventura.recurso.WebServiceValidador;
@@ -37,6 +38,7 @@ public class PessoaFisicaRecurso extends WebService {
 	public static final String URL_ENCONTRAR = "encontrar";
 	public static final String URL_AVALIAR = "avaliar";
 	public static final String URL_LISTAR_HABILIDADES = "listarhabilidades";
+	public static final String URL_LATITUDE_LONGITUDE = "latlng";
 
 	PessoaFisicaServico pessoaFisicaServico;
 	AvaliacaoServico avaliacaoServico;
@@ -67,6 +69,10 @@ public class PessoaFisicaRecurso extends WebService {
 		return getUrlHome() + "/" + URL_LISTAR_HABILIDADES;
 	}
 
+	public static String getUrlLatitudeLongitude() {
+		return getUrlHome() + "/" + URL_LATITUDE_LONGITUDE;
+	}
+
 	@Autowired
 	public PessoaFisicaRecurso(UsuarioServico usuarioServ, PessoaFisicaServico pessoaFisicaServico,
 			AvaliacaoServico avaliacaoServico, AventureiroServico aventureiroServico,
@@ -82,29 +88,36 @@ public class PessoaFisicaRecurso extends WebService {
 		adicionarValidador(URL_EDITAR, validadorBasico);
 		adicionarValidador(URL_ENCONTRAR, validadorBasico);
 		adicionarValidador(URL_AVALIAR, validadorBasico);
-		adicionarValidador(URL_LISTAR_HABILIDADES, validadorBasico);
+		adicionarValidador(URL_LATITUDE_LONGITUDE, validadorBasico);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = URL_CADASTRAR)
-	public PessoaFisica cadastrarPessoaFisica(
-			@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica) {
+	public Aventureiro_PessoaFisica cadastrarPessoaFisica(
+			@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica,
+			@RequestParam(value = "longitude", defaultValue = "0") Double longitude,
+			@RequestParam(value = "latitude", defaultValue = "0") Double latitude) {
 		Usuario usuario = getUsuario(URL_CADASTRAR);
 
 		pessoaFisica.setIdUsuario(usuario.getIdUsuario());
 		Celular cel = pessoaFisica.getCelular();
 		pessoaFisica.setCelular(null);
 
+		Aventureiro_PessoaFisica av_pf = new Aventureiro_PessoaFisica();
 		try {
 			pessoaFisica = pessoaFisicaServico.cadastrarPessoaFisica(pessoaFisica);
 			pessoaFisica.setCelular(cel);
 			cel.setIdPessoa(pessoaFisica.getIdPessoa());
 			pessoaFisica = pessoaFisicaServico.editarPessoaFisica(pessoaFisica);
+			Aventureiro av = aventureiroServico.cadastrarAventureiro(pessoaFisica.getIdPessoa(), latitude, longitude);
+
+			av_pf.setAventureiro(av);
+			av_pf.setPessoaFisica(pessoaFisica);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
 
-		return pessoaFisica;
+		return av_pf;
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
@@ -148,16 +161,21 @@ public class PessoaFisicaRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_ENCONTRAR)
-	public PessoaFisica encontrarPessoaFisica() {
+	public Aventureiro_PessoaFisica encontrarPessoaFisica() {
 		Usuario usuario = getUsuario(URL_ENCONTRAR);
 		PessoaFisica pessoaFisica = null;
+		Aventureiro_PessoaFisica av_pf = new Aventureiro_PessoaFisica();
 		try {
 			pessoaFisica = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+			Aventureiro av = aventureiroServico.encontrarAventureiroPorIdPessoa(pessoaFisica.getIdPessoa());
+
+			av_pf.setAventureiro(av);
+			av_pf.setPessoaFisica(pessoaFisica);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
 		}
-		return pessoaFisica;
+		return av_pf;
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = URL_AVALIAR)
@@ -192,4 +210,19 @@ public class PessoaFisicaRecurso extends WebService {
 		return listHabilidades;
 	}
 
+	@RequestMapping(method = RequestMethod.PATCH, value = URL_LATITUDE_LONGITUDE)
+	public void atualizarLatitudeLongitude(@RequestParam(value = "longitude", defaultValue = "0") Double longitude,
+			@RequestParam(value = "latitude", defaultValue = "0") Double latitude) {
+		Usuario usuario = getUsuario(URL_AVALIAR);
+		try {
+			PessoaFisica pf = pessoaFisicaServico.encontrarPessoaFisicaPorIdUsuario(usuario.getIdUsuario());
+			Aventureiro av = aventureiroServico.encontrarAventureiroPorIdPessoa(pf.getIdPessoa());
+			av.getPosicao().setLatitude(latitude);
+			av.getPosicao().setLongitude(longitude);
+			aventureiroServico.atualizarAventureiro(av);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

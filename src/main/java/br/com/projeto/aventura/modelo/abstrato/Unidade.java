@@ -25,7 +25,7 @@ public class Unidade implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idUnidade;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idUnidade")
 	Posicao posicao;
 
