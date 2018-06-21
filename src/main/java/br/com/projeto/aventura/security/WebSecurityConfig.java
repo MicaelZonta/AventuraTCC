@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.projeto.aventura.recurso.impl.LoginRecurso;
@@ -65,12 +66,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
+	public static NoOpPasswordEncoder passwordEncoder() {
+		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+	}
+
+	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider() {
 		// Encarregado de criar um autenticador
 		System.out.println("Getting Authentication Provider...");
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(loginServico);
-		auth.setPasswordEncoder(getPasswordEncoder());
+		auth.setPasswordEncoder(passwordEncoder()); //Troca para ativar criptografia
 		return auth;
 	}
 

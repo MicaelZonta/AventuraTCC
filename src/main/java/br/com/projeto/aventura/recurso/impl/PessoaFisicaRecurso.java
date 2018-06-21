@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.sun.xml.bind.v2.runtime.unmarshaller.DefaultValueLoaderDecorator;
-
 import br.com.projeto.aventura.modelo.Avaliacao;
 import br.com.projeto.aventura.modelo.Aventureiro;
 import br.com.projeto.aventura.modelo.Celular;
@@ -125,7 +123,7 @@ public class PessoaFisicaRecurso extends WebService {
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
 	public PessoaFisica editarPessoaFisica(
-			@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica2) {
+			@RequestBody PessoaFisica pessoaFisica2) {
 
 		Usuario usuario = getUsuario(URL_EDITAR);
 
@@ -184,8 +182,8 @@ public class PessoaFisicaRecurso extends WebService {
 	@RequestMapping(method = RequestMethod.PUT, value = URL_AVALIAR)
 	public Avaliacao avaliarAventureiro(@RequestParam(value = "nota", defaultValue = "") Integer nota,
 			@RequestParam(value = "descricao", defaultValue = "") String descricao,
-			@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "usuario", defaultValue = "") Usuario usuarioAvaliado) {
+			@RequestBody Missao missao,
+			@RequestBody Usuario usuarioAvaliado) {
 		Usuario usuario = getUsuario(URL_AVALIAR);
 		Avaliacao avaliacao = null;
 		try {

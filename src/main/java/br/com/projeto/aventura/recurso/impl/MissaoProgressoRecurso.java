@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,7 +99,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = URL_ACEITAR_MISSAO)
-	public MissaoProgresso aceitarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public MissaoProgresso aceitarMissao(@RequestBody Missao missao) {
 		Usuario usuario = getUsuario(URL_ACEITAR_MISSAO);
 		MissaoProgresso mp = null;
 		try {
@@ -113,8 +114,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = URL_CANCELAR_MISSAO)
-	public MissaoProgresso cancelarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa) {
+	public MissaoProgresso cancelarMissao(@RequestBody Missao missao, @RequestBody Usuario usuarioPessoa) {
 		Usuario usuario = getUsuario(URL_CANCELAR_MISSAO);
 		MissaoProgresso mp = null;
 		try {
@@ -130,8 +130,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_COMPLETAR_TAREFA)
-	public MissaoProgresso completarTarefa(@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "tarefaProgresso", defaultValue = "") TarefaProgresso tarefaProgresso) {
+	public MissaoProgresso completarTarefa(@RequestBody Missao missao, @RequestBody TarefaProgresso tarefaProgresso) {
 		Usuario usuario = getUsuario(URL_COMPLETAR_TAREFA);
 		MissaoProgresso mp = null;
 		try {
@@ -146,8 +145,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_PAUSAR_MISSAO)
-	public MissaoProgresso pausarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa) {
+	public MissaoProgresso pausarMissao(@RequestBody Missao missao, @RequestBody Usuario usuarioPessoa) {
 		Usuario usuario = getUsuario(URL_PAUSAR_MISSAO);
 		MissaoProgresso mp = null;
 		try {
@@ -163,8 +161,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_BUSCAR_PROGRESSO)
-	public MissaoProgresso buscarMissaoProgresso(@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa) {
+	public MissaoProgresso buscarMissaoProgresso(@RequestBody Missao missao, @RequestBody Usuario usuarioPessoa) {
 		@SuppressWarnings("unused")
 		Usuario usuario = getUsuario(URL_BUSCAR_PROGRESSO);
 		MissaoProgresso mp = null;
@@ -195,8 +192,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = URL_LISTAR_PROGRESSO_POR_MISSAO)
-	public List<MissaoProgresso> listarMissaoProgresso(
-			@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public List<MissaoProgresso> listarMissaoProgresso(@RequestBody Missao missao) {
 		@SuppressWarnings("unused")
 		Usuario usuario = getUsuario(URL_LISTAR_PROGRESSO_POR_MISSAO);
 		List<MissaoProgresso> mp = null;
@@ -211,8 +207,7 @@ public class MissaoProgressoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_ATUALIZAR_PROGRESSO)
-	public MissaoProgresso listarMissaoProgresso(@RequestParam(value = "missao", defaultValue = "") Missao missao,
-			@RequestParam(value = "usuarioPessoa", defaultValue = "") Usuario usuarioPessoa,
+	public MissaoProgresso listarMissaoProgresso(@RequestBody Missao missao, @RequestBody Usuario usuarioPessoa,
 			@RequestParam(value = "isituacao", defaultValue = "") int idSituacao) {
 		Usuario usuario = getUsuario(URL_LISTAR_PROGRESSO_POR_MISSAO);
 		MissaoProgresso mp = null;

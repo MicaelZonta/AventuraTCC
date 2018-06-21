@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,7 +81,7 @@ public class MissaoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = URL_CADASTRAR)
-	public Missao cadastrarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public Missao cadastrarMissao(@RequestBody Missao missao) {
 		Usuario usuario = getUsuario(URL_CADASTRAR);
 
 		try {
@@ -96,7 +97,7 @@ public class MissaoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.PATCH, value = URL_EDITAR)
-	public Missao editarMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public Missao editarMissao(@RequestBody Missao missao) {
 
 		Usuario usuario = getUsuario(URL_EDITAR);
 		Missao missaoOg = null;
@@ -140,7 +141,7 @@ public class MissaoRecurso extends WebService {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = URL_DELETAR)
-	public Missao excluirMissao(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public Missao excluirMissao(@RequestBody Missao missao) {
 
 		Usuario usuario = getUsuario(URL_DELETAR);
 		Missao missaoOg = null;
@@ -180,7 +181,7 @@ public class MissaoRecurso extends WebService {
 
 	@SuppressWarnings("unused")
 	@RequestMapping(method = RequestMethod.GET, value = URL_LISTAR)
-	public List<Missao> listarMissoes(@RequestParam(value = "missao", defaultValue = "") Missao missao) {
+	public List<Missao> listarMissoes(@RequestBody Missao missao) {
 		Usuario usuario = getUsuario(URL_ENCONTRAR);
 		List<Missao> missoes = null;
 		try {
