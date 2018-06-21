@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+
+import com.sun.xml.bind.v2.runtime.unmarshaller.DefaultValueLoaderDecorator;
 
 import br.com.projeto.aventura.modelo.Avaliacao;
 import br.com.projeto.aventura.modelo.Aventureiro;
@@ -93,12 +96,12 @@ public class PessoaFisicaRecurso extends WebService {
 
 	@RequestMapping(method = RequestMethod.PUT, value = URL_CADASTRAR)
 	public Aventureiro_PessoaFisica cadastrarPessoaFisica(
-			@RequestParam(value = "pessoaFisica", defaultValue = "") PessoaFisica pessoaFisica,
+			@RequestBody PessoaFisica pessoaFisica,
 			@RequestParam(value = "longitude", defaultValue = "0") Double longitude,
-			@RequestParam(value = "latitude", defaultValue = "0") Double latitude) {
-		Usuario usuario = getUsuario(URL_CADASTRAR);
+			@RequestParam(value = "latitude", defaultValue = "0") Double latitude,
+			@RequestParam(value = "idUsuario", defaultValue = "0") Long idUsuario) {
 
-		pessoaFisica.setIdUsuario(usuario.getIdUsuario());
+		pessoaFisica.setIdUsuario(idUsuario);
 		Celular cel = pessoaFisica.getCelular();
 		pessoaFisica.setCelular(null);
 
